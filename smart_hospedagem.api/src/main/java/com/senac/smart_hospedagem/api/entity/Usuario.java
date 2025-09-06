@@ -1,0 +1,65 @@
+package com.senac.smart_hospedagem.api.entity;
+
+import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.Collection;
+import java.util.List;
+
+@Entity
+public class Usuario{
+
+    public Usuario(){}
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
+    private String email;
+    private String senha;
+    private String usuario;
+
+    private String role;
+
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        if("ROLE_ADMIN".equals(this.role)){
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        }else{
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        }
+    }
+
+
+    public String getUsuario() {
+        return this.usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return this.senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+}
