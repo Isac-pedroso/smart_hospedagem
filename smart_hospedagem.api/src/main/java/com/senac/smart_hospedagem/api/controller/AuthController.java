@@ -1,4 +1,5 @@
 package com.senac.smart_hospedagem.api.controller;
+import com.senac.smart_hospedagem.api.config.CorsConfig;
 
 import com.senac.smart_hospedagem.api.dto.LoginRequestDto;
 import com.senac.smart_hospedagem.api.services.TokenService;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 @Tag(name = "Autenticação controller", description = "Sei la")
-@CrossOrigin(origins = "http://localhost:5174")
 public class AuthController {
     @Autowired
     private TokenService tokenService;
