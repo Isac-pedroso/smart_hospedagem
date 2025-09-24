@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import axios from "axios";
 import React, {useEffect, useState} from 'react';
 import { postResponse } from "../../utils/axios";
 
@@ -11,16 +12,16 @@ function Login() {
         
         try{   
             const data = {email: email, senha: senha};
-            const response = await postResponse("/auth/login", data);
+            const response = await axios.post("http://localhost:8080/auth/login", data);
 
             if(response.status == 200){
                 alert("Logado com sucesso!");
+                return true;
             }
             
-            return true;
         }catch(error: any){
             alert(error)
-            throw error;
+            return false;
         }
     }
 
