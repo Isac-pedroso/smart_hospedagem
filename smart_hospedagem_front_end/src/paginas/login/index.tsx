@@ -16,6 +16,7 @@ function Login() {
 
             if(response.status == 200){
                 alert("Logado com sucesso!");
+                console.log(response.data)
                 return true;
             }
             

@@ -9,14 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
 @Tag(name = "Autenticação controller", description = "Sei la")
+@CrossOrigin(origins = "http://localhost:5174")
 public class AuthController {
     @Autowired
     private TokenService tokenService;
@@ -31,7 +29,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Usuario ou senha invalidos!");
         }
 
-        var token = tokenService.gerarToken(request.email(), request.senha());
+        var token = tokenService.gerarToken(request.email(), request.senha(), request.role());
 
         return ResponseEntity.ok(token);
     }
