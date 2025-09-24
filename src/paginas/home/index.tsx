@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './css/home.css'
+import '../css/home.css'
 
 function Home() {
   return (

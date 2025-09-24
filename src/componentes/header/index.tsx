@@ -1,24 +1,17 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Header(){
-    const navigate = useNavigate();
+    
 
-    const handleLoginClick = () => {
-        navigate("/login");    
-    };
-
-    const handleHomeClick = () => {
-        navigate("/");
-    };
 
     return(
         <>
             {/* Navbar */}
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow" style={{position: 'fixed', width: '100%'}}>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow" style={{position: 'fixed', width: '100%', zIndex: 1}}>
                 <div className="container">
-                    <a className="navbar-brand fw-bold" href="#">
+                    <Link to="/" style={{cursor: "pointer"}} className="navbar-brand fw-bold">
                         Smart Hospedagem
-                    </a>
+                    </Link>
                     <button
                         className="navbar-toggler"
                         type="button"
@@ -29,10 +22,10 @@ function Header(){
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav ms-auto">
-                            <li className="nav-item">
-                                <a href="" onClick={handleHomeClick} className="nav-link">
+                            <li style={{cursor: "pointer"}} className="nav-item">
+                                <Link to="/" className="nav-link">
                                 Home
-                                </a>
+                                </Link>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">
@@ -50,9 +43,9 @@ function Header(){
                                 </a>
                             </li>
                             <li>
-                                <a onClick={handleLoginClick} className="btn btn-light fw-bold">
+                                <Link to="/login" className="btn btn-light fw-bold">
                                     <i className="bi bi-box-arrow-in-right me-1"></i> Login
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
