@@ -1,0 +1,40 @@
+.hero {
+  background: linear-gradient(rgba(0, 100, 0, 0.6), rgba(0, 100, 0, 0.6)),
+    url("https://picsum.photos/1920/1080?random=7") center/cover no-repeat;
+  color: white;
+  padding: 150px 0;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.hero p {
+  font-size: 1.25rem;
+}
+
+.gallery-item img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+
+#quartos .card img {
+  height: 220px;
+  object-fit: cover;
+}
+
+#quartos .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#quartos .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
