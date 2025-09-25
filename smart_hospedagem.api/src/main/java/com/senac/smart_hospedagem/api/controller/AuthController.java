@@ -1,16 +1,25 @@
 package com.senac.smart_hospedagem.api.controller;
 import com.senac.smart_hospedagem.api.config.CorsConfig;
 
+import com.senac.smart_hospedagem.api.dto.AuthUserDto;
 import com.senac.smart_hospedagem.api.dto.LoginRequestDto;
+import com.senac.smart_hospedagem.api.entity.Usuario;
 import com.senac.smart_hospedagem.api.services.TokenService;
 import com.senac.smart_hospedagem.api.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/auth")
@@ -28,9 +37,25 @@ public class AuthController {
         if(!usuarioService.validarSenha(request)){
             return ResponseEntity.badRequest().body("Usuario ou senha invalidos!");
         }
+        Usuario usuario = usuarioService.buscarPorEmail(request.email());
+        var role = usuario.getRole();
 
-        var token = tokenService.gerarToken(request.email(), request.senha(), request.role());
+        var token = tokenService.gerarToken(request.usuario(), request.senha(), role, request.email());
 
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(Map.of("token", token));
     }
+
+    @GetMapping("/usuarioAutenticado")
+    public ResponseEntity<AuthUserDto> getUsuarioAutenticado(Authentication authentication){
+        try{
+            String email = authentication.getName();
+            System.out.println(email);
+            Usuario usuario = usuarioService.buscarPorEmail(email);
+            AuthUserDto novoUsuario = new AuthUserDto(usuario);
+            return ResponseEntity.ok(novoUsuario);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
 }

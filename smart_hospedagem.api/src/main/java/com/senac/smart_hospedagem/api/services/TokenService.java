@@ -27,16 +27,16 @@ public class TokenService {
     @Autowired
     private TokenRepository tokenRepository;
 
-    public String gerarToken(String usuario, String senha, String role){
+    public String gerarToken(String usuario, String senha, String role, String email){
         Algorithm algorithm = Algorithm.HMAC256(secret);
 
         String token = JWT.create()
                 .withIssuer(emissor)
-                .withSubject(usuario)
+                .withSubject(email)
                 .withClaim("role", role)
                 .withExpiresAt(this.gerarDataExpiracao())
                 .sign(algorithm);
-        tokenRepository.save(new Token(null, token, usuario));
+        tokenRepository.save(new Token(null, token, usuario, email));
 
         return token;
     }
@@ -53,7 +53,7 @@ public class TokenService {
             throw new IllegalArgumentException("Token invalido");
         }
 
-        return tokenResult.getUsuario();
+        return tokenResult.getEmail();
     }
 
     public Instant gerarDataExpiracao(){
@@ -70,6 +70,6 @@ public class TokenService {
                 .build();
         DecodedJWT decodedJWT = verifier.verify(token);
 
-        return decodedJWT.getClaim("role").toString();
+        return decodedJWT.getClaim("role").asString();
     }
 }

@@ -1,28 +1,25 @@
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import React, {useEffect, useState} from 'react';
-import { postResponse } from "../../utils/axios";
+import { useAuth } from "../../contexts/AuthContext";
 
-function Login() {
 
+const Login: React.FC = () => {
+    const { login } = useAuth();
+    const navigate = useNavigate();
+
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean | null>(false)
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
 
     const handleLogin = async () => {
-        
-        try{   
-            const data = {email: email, senha: senha};
-            const response = await axios.post("http://localhost:8080/auth/login", data);
-
-            if(response.status == 200){
-                alert("Logado com sucesso!");
-                console.log(response.data)
-                return true;
-            }
-            
-        }catch(error: any){
-            alert(error)
-            return false;
+        try{
+            await login(email, senha);
+            navigate("/");
+        }catch(error){
+            setError("Email ou senha incorreto");
+        }finally{
+            setLoading(false);
         }
     }
 
@@ -67,7 +64,7 @@ function Login() {
                     <div className="d-grid mb-2">
                         <button type="button" className="btn btn-success" onClick={handleLogin}>Entrar</button>
                     </div>
-
+                    
                     <div className="text-center mb-3">
                         <a href="#" className="small">Esqueceu a senha?</a>
                     </div>

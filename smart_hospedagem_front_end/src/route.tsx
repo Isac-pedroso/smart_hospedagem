@@ -3,6 +3,7 @@ import Home from './paginas/home/index.tsx';
 import Login from './paginas/login/index.tsx';
 import Cadastro from './paginas/registroUser/index.tsx'
 import LayoutAdmin from './componentes/LayoutAdmin/index.tsx';
+import RecirecionaPorAutenticacao from './componentes/RecirecionaPorAutenticacao/index.tsx'
 
 function AppRoutes() {
     return (
@@ -10,8 +11,8 @@ function AppRoutes() {
             <Routes>
                 <Route path='/' element={<LayoutAdmin/>}>
                     <Route index element={<Home />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/cadastro' element={<Cadastro />} />
+                    <Route path='/login' element={<RecirecionaPorAutenticacao><Login /></ RecirecionaPorAutenticacao >} />
+                    <Route path='/cadastro' element={<RecirecionaPorAutenticacao><Cadastro /></ RecirecionaPorAutenticacao >} />
                 </Route>
             </Routes>
         </>
