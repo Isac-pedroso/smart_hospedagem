@@ -51,8 +51,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const login = async (email: string, senha: string) => {
     const token = await authService.login(email, senha);
-    console.log("Authcontext")
-    console.log(token);
+    
     setToken(token);
 
     api.setBearer(token);
@@ -67,6 +66,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     authService.logout();
     setToken(null);
     setUser(null);
+    
   };
 
   const hasRole = (role: string) => user?.role === role;

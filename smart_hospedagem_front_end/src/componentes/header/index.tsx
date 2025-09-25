@@ -1,8 +1,18 @@
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import { Navigate } from "react-router-dom";
 
-function Header(){
-    
+const Header: React.FC = () => {
+    const {user, hasRole, deslogar, loading } = useAuth();
+    console.log(user);
+    if(loading) return null;
+    const navigate = useNavigate();
 
+    const handleDeslogar = () => {
+        deslogar();
+        navigate("/login");    
+        
+    }
 
     return(
         <>
@@ -22,31 +32,50 @@ function Header(){
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav ms-auto">
-                            <li style={{cursor: "pointer"}} className="nav-item">
-                                <Link to="/" className="nav-link">
-                                Home
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                Sobre
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                Serviços
-                                </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                Contato
-                                </a>
-                            </li>
-                            <li>
-                                <Link to="/login" className="btn btn-light fw-bold">
-                                    <i className="bi bi-box-arrow-in-right me-1"></i> Login
-                                </Link>
-                            </li>
+                            {user && user.role === "ROLE_ADMIN" && (
+                                <>
+                                <li style={{cursor: "pointer"}} className="nav-item">
+                                    <Link to="/galeria" className="nav-link">
+                                    Galeria
+                                    </Link>
+                                </li>
+                                <li>
+                                    <a className="nav-link" style={{color: "white", textDecoration: "none"}}>{user.email}</a>
+                                </li>
+                                <li style={{marginLeft: "10px"}}>
+                                     <button onClick={handleDeslogar} className="btn btn-secondary">Sair</button>
+                                </li>
+                                </>
+                            )}
+                            {!user && (
+                               <>
+                                <li style={{cursor: "pointer"}} className="nav-item">
+                                    <Link to="/" className="nav-link">
+                                    Home
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="#">
+                                    Sobre
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="#">
+                                    Serviços
+                                    </a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="#">
+                                    Contato
+                                    </a>
+                                </li>
+                                <li>
+                                    <Link to="/login" className="btn btn-light fw-bold">
+                                        <i className="bi bi-box-arrow-in-right me-1"></i> Login
+                                    </Link>
+                                </li>
+                               </> 
+                            )}
                         </ul>
                     </div>
                 </div>

@@ -15,7 +15,6 @@ export default class AuthService{
     async login(email: string, senha: string){
         try{
             const { data } = await this.api.client.post<AuthResponse>('auth/login', { email, senha });
-            console.log(data);
             TokenStorage.setToken(data.token);
             this.api.setBearer(data.token)
             
