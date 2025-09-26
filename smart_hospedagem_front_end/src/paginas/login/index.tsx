@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import React, {useEffect, useState} from 'react';
 import { useAuth } from "../../contexts/AuthContext";
 
-
 const Login: React.FC = () => {
     const { login } = useAuth();
     const navigate = useNavigate();

@@ -22,6 +22,17 @@ public class Usuario{
 
     private String role;
 
+    @OneToMany(mappedBy = "usuario")
+    private List<Galeria> galerias;
+
+    public List<Galeria> getGalerias() {
+        return galerias;
+    }
+
+    public void setGalerias(List<Galeria> galerias) {
+        this.galerias = galerias;
+    }
+
     public Collection<? extends GrantedAuthority> getAuthorities(){
         if("ROLE_ADMIN".equals(this.role)){
             return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
