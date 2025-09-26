@@ -29,9 +29,9 @@ public class GaleriaController {
     }
 
     @GetMapping("/listarPorUsuario/{id}")
-    public ResponseEntity<?> listarPorUsuario(@PathVariable Long id_usuario){
+    public ResponseEntity<?> listarPorUsuario(@PathVariable Long id){
         try{
-            return ResponseEntity.ok(galeriaService.listarPorUsuario(id_usuario));
+            return ResponseEntity.ok(galeriaService.listarPorUsuario(id));
         }catch(Exception e){
             e.printStackTrace();
             Map<String, String> response = new HashMap<>();

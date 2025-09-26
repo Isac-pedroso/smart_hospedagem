@@ -16,6 +16,12 @@ export default class GaleriaService{
         return data;
     }
 
+    async listarPorUsuario(id: number): Promise<Galeria[]>{
+        const { data } = await this.api.client.get<Galeria[]>(`galeriaAdmin/listarPorUsuario/${id}`)
+        console.log(data);
+        return data;
+    }
+
     async cadastrar(galeria: Galeria){
         const { data } = await this.api.client.post("galeriaAdmin/cadastrar", galeria);
         return data;

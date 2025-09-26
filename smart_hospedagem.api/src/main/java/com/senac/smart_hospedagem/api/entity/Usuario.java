@@ -1,5 +1,6 @@
 package com.senac.smart_hospedagem.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,6 +24,7 @@ public class Usuario{
     private String role;
 
     @OneToMany(mappedBy = "usuario")
+    @JsonIgnore
     private List<Galeria> galerias;
 
     public List<Galeria> getGalerias() {
