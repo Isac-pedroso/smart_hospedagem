@@ -8,6 +8,7 @@ export default class GaleriaService{
     constructor(api: AxiosConfiguracao){
         this.api = api;
         const token = TokenStorage.getToken();
+        console.log(token)
         if(token) this.api.setBearer(token);
     }
 

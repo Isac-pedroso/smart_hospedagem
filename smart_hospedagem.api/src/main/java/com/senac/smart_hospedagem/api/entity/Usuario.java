@@ -24,7 +24,6 @@ public class Usuario{
     private String role;
 
     @OneToMany(mappedBy = "usuario")
-    @JsonIgnore
     private List<Galeria> galerias;
 
     public List<Galeria> getGalerias() {

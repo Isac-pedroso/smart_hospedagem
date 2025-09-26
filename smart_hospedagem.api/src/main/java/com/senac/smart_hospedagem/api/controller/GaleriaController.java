@@ -39,4 +39,19 @@ public class GaleriaController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+
+    @GetMapping("/listar")
+    public ResponseEntity<?> listar(){
+        try{
+            return ResponseEntity.ok(galeriaService.listar());
+        }catch(Exception e){
+            e.printStackTrace();
+            Map<String, String> response = new HashMap<>();
+            response.put("erro","Erro: "+e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
+
 }

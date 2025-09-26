@@ -30,8 +30,31 @@ public class GaleriaService {
         return galeriaRepository.save(galeriaPersist);
     }
 
-    public List<Galeria> listarPorUsuario(Long id){
+    public List<GaleriaDto> listarPorUsuario(Long id){
         List<Galeria> response = galeriaRepository.findByUsuarioId(id);
-        return response;
+
+        return response.stream().map(item -> {
+            GaleriaDto fotos = new GaleriaDto();
+            fotos.setId(item.getId());
+            fotos.setTitulo(item.getTitulo());
+            fotos.setDescricao(item.getDescricao());
+            fotos.setUrl(item.getUrl());
+            fotos.setUsuario(null);
+            return fotos;
+        }).toList();
+    }
+
+    public List<GaleriaDto> listar(){
+        List<Galeria> response = galeriaRepository.findAll();
+
+        return response.stream().map(item -> {
+            GaleriaDto fotos = new GaleriaDto();
+            fotos.setId(item.getId());
+            fotos.setTitulo(item.getTitulo());
+            fotos.setDescricao(item.getDescricao());
+            fotos.setUrl(item.getUrl());
+            fotos.setUsuario(null);
+            return fotos;
+        }).toList();
     }
 }

@@ -1,8 +1,39 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../css/home.css'
+import { useEffect, useState } from 'react';
+import type { Galeria } from '../../models/Galeria';
+import GaleriaService from '../../services/GaleriaService';
+import AxiosConfiguracao from '../../api/axiosConfig';
+
 
 function Home() {
+  const api = new AxiosConfiguracao("http://localhost:8080");
+  const galeriaService = new GaleriaService(api);
+
+  const [fotos, setFotos] = useState<Galeria[]>([])
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+
+  useEffect(()=>{
+    handleListarFotos();
+  }, []);
+
+  const handleListarFotos = async () => {
+    try{
+      const data = await galeriaService.listar();
+      console.log(data);
+      setFotos(data);
+    }catch(error){
+      console.error(error);
+      setError("Problema ao trazer as images!");
+    }finally{
+      setLoading(false);
+    }
+  }
   return (
+
+    
     <>
       {/* Hero Section */}
       <section className="hero text-center d-flex align-items-center" style={{paddingTop: '200px'}}>
@@ -26,62 +57,18 @@ function Home() {
               Um pouco da beleza que você vai encontrar aqui
             </p>
           </div>
-
           <div className="row g-4">
+            {fotos.map((item) => (
             <div className="col-md-4 col-sm-6">
               <div className="gallery-item">
                 <img
                   src="https://picsum.photos/600/400?random=1"
                   className="img-fluid rounded shadow"
-                  alt="Vista da pousada"
+                  alt={item.titulo}
                 />
               </div>
             </div>
-            <div className="col-md-4 col-sm-6">
-              <div className="gallery-item">
-                <img
-                  src="https://picsum.photos/600/400?random=2"
-                  className="img-fluid rounded shadow"
-                  alt="Quartos confortáveis"
-                />
-              </div>
-            </div>
-            <div className="col-md-4 col-sm-6">
-              <div className="gallery-item">
-                <img
-                  src="https://picsum.photos/600/400?random=3"
-                  className="img-fluid rounded shadow"
-                  alt="Área da piscina"
-                />
-              </div>
-            </div>
-            <div className="col-md-4 col-sm-6">
-              <div className="gallery-item">
-                <img
-                  src="https://picsum.photos/600/400?random=4"
-                  className="img-fluid rounded shadow"
-                  alt="Restaurante da pousada"
-                />
-              </div>
-            </div>
-            <div className="col-md-4 col-sm-6">
-              <div className="gallery-item">
-                <img
-                  src="https://picsum.photos/600/400?random=5"
-                  className="img-fluid rounded shadow"
-                  alt="Natureza ao redor"
-                />
-              </div>
-            </div>
-            <div className="col-md-4 col-sm-6">
-              <div className="gallery-item">
-                <img
-                  src="https://picsum.photos/600/400?random=6"
-                  className="img-fluid rounded shadow"
-                  alt="Trilha ecológica"
-                />
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </main>

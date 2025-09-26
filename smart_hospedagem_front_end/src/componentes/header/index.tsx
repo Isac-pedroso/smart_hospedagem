@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 
 const Header: React.FC = () => {
     const {user, hasRole, deslogar, loading } = useAuth();
-    console.log(user);
+    
     if(loading) return null;
     const navigate = useNavigate();
 
