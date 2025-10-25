@@ -11,6 +11,7 @@ export default class AxiosConfiguracao{
     setBearer(token: string){
         if(token){
             this.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            console.log(`Bearer ${token}`);
         }else{
             delete this.axios.defaults.headers.common['Authorization'];
         }
