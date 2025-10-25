@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -31,7 +32,8 @@ public class GaleriaController {
     @GetMapping("/listarPorUsuario/{id}")
     public ResponseEntity<?> listarPorUsuario(@PathVariable Long id){
         try{
-            return ResponseEntity.ok(galeriaService.listarPorUsuario(id));
+            List<GaleriaDto> galerias = galeriaService.listarPorUsuario(id);
+            return ResponseEntity.ok(galerias);
         }catch(Exception e){
             e.printStackTrace();
             Map<String, String> response = new HashMap<>();
@@ -44,7 +46,8 @@ public class GaleriaController {
     @GetMapping("/listar")
     public ResponseEntity<?> listar(){
         try{
-            return ResponseEntity.ok(galeriaService.listar());
+            List<GaleriaDto> galerias = galeriaService.listar();
+            return ResponseEntity.ok(galerias);
         }catch(Exception e){
             e.printStackTrace();
             Map<String, String> response = new HashMap<>();

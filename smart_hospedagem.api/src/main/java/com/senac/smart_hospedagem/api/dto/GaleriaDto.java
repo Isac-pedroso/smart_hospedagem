@@ -4,11 +4,25 @@ import com.senac.smart_hospedagem.api.entity.Galeria;
 import jakarta.persistence.*;
 
 public class GaleriaDto {
+    public GaleriaDto(){
+
+    }
     private Long id;
     private String titulo;
     private String descricao;
     private String url;
     private Long usuario;
+
+    public GaleriaDto(Galeria galeria){
+        this.id = galeria.getId();
+        this.titulo = galeria.getTitulo();
+        this.descricao = galeria.getDescricao();
+        this.url = galeria.getUrl();
+
+        if(galeria.getUsuario() != null){
+            this.usuario = galeria.getUsuario().getId();
+        }
+    }
 
     public Long getUsuario() {
         return usuario;

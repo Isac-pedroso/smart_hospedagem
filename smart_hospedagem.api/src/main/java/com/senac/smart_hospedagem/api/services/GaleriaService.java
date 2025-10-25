@@ -33,28 +33,12 @@ public class GaleriaService {
     public List<GaleriaDto> listarPorUsuario(Long id){
         List<Galeria> response = galeriaRepository.findByUsuarioId(id);
 
-        return response.stream().map(item -> {
-            GaleriaDto fotos = new GaleriaDto();
-            fotos.setId(item.getId());
-            fotos.setTitulo(item.getTitulo());
-            fotos.setDescricao(item.getDescricao());
-            fotos.setUrl(item.getUrl());
-            fotos.setUsuario(null);
-            return fotos;
-        }).toList();
+        return response.stream().map(GaleriaDto::new).toList();
     }
 
     public List<GaleriaDto> listar(){
         List<Galeria> response = galeriaRepository.findAll();
 
-        return response.stream().map(item -> {
-            GaleriaDto fotos = new GaleriaDto();
-            fotos.setId(item.getId());
-            fotos.setTitulo(item.getTitulo());
-            fotos.setDescricao(item.getDescricao());
-            fotos.setUrl(item.getUrl());
-            fotos.setUsuario(null);
-            return fotos;
-        }).toList();
+        return response.stream().map(GaleriaDto::new).toList();
     }
 }

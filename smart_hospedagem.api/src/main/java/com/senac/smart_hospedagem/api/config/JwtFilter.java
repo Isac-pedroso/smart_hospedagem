@@ -29,8 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
             || path.startsWith("/swagger-resources")
             || path.startsWith("/v3/api-docs")
                 || path.startsWith("/webjars")
-                || path.startsWith("/swagger-ui")
-                || path.startsWith("/galeriaAdmin/listar")){
+                || path.startsWith("/swagger-ui")){
 
             filterChain.doFilter(request, response);
             return;
@@ -44,7 +43,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 String user = tokenService.validarToken(token);
                 String role = tokenService.getRolePeloToken(token);
 
-                List<GrantedAuthority> autorizacao = List.of(new SimpleGrantedAuthority(role));
+                List<GrantedAuthority> autorizacao = List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
                 System.out.println(user);
                 System.out.println(role);
@@ -55,7 +54,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             } else {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Token não informado!");
+                response.getWriter().write("Token ausente!");
                 return;
             }
         }catch(Exception e){

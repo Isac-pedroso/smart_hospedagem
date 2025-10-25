@@ -25,7 +25,7 @@ public class SecurityConfiguration {
                         auth
                                 .requestMatchers("/auth/login").permitAll()
                                 .requestMatchers("/auth/usuarioAutenticado").authenticated()
-                                .requestMatchers("/galeriaAdmin/cadastrar").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/galeriaAdmin/cadastrar").authenticated()
                                 .requestMatchers(HttpMethod.GET,"/galeriaAdmin/listar").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/galeriaAdmin/listarPorUsuario/**").authenticated()
                                 .requestMatchers("/swagger-resources/**").permitAll()
