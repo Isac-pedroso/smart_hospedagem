@@ -39,8 +39,7 @@ const GaleriaCrud: React.FC = () => {
       await galeriaService.cadastrar(galeria)
       
       await handleGetFotosUsuario();
-
-      setGalerias(prev => [...prev, galeria]);
+      
       setTitulo("");
       setDescricao("");
       setUrl("");
