@@ -1,6 +1,6 @@
-package com.senac.smart_hospedagem.api.repository;
+package com.senac.smart_hospedagem.api.domain.repository;
 
-import com.senac.smart_hospedagem.api.entity.Token;
+import com.senac.smart_hospedagem.api.domain.entity.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

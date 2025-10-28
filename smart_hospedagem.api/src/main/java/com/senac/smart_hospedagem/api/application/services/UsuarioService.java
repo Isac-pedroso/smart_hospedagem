@@ -1,8 +1,8 @@
-package com.senac.smart_hospedagem.api.services;
+package com.senac.smart_hospedagem.api.application.services;
 
-import com.senac.smart_hospedagem.api.dto.LoginRequestDto;
-import com.senac.smart_hospedagem.api.entity.Usuario;
-import com.senac.smart_hospedagem.api.repository.UsuarioRepository;
+import com.senac.smart_hospedagem.api.application.dto.login.LoginRequestDto;
+import com.senac.smart_hospedagem.api.domain.entity.Usuario;
+import com.senac.smart_hospedagem.api.domain.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

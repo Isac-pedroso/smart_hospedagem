@@ -1,4 +1,4 @@
-package com.senac.smart_hospedagem.api.entity;
+package com.senac.smart_hospedagem.api.domain.entity;
 
 import jakarta.persistence.*;
 

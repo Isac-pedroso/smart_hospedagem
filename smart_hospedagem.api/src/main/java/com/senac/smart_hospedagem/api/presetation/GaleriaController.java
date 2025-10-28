@@ -1,8 +1,8 @@
-package com.senac.smart_hospedagem.api.controller;
+package com.senac.smart_hospedagem.api.presetation;
 
-import com.senac.smart_hospedagem.api.dto.GaleriaDto;
-import com.senac.smart_hospedagem.api.entity.Galeria;
-import com.senac.smart_hospedagem.api.services.GaleriaService;
+import com.senac.smart_hospedagem.api.application.dto.galeria.GaleriaDto;
+import com.senac.smart_hospedagem.api.domain.entity.Galeria;
+import com.senac.smart_hospedagem.api.application.services.GaleriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,11 +1,10 @@
-package com.senac.smart_hospedagem.api.controller;
-import com.senac.smart_hospedagem.api.config.CorsConfig;
+package com.senac.smart_hospedagem.api.presetation;
 
-import com.senac.smart_hospedagem.api.dto.AuthUserDto;
-import com.senac.smart_hospedagem.api.dto.LoginRequestDto;
-import com.senac.smart_hospedagem.api.entity.Usuario;
-import com.senac.smart_hospedagem.api.services.TokenService;
-import com.senac.smart_hospedagem.api.services.UsuarioService;
+import com.senac.smart_hospedagem.api.application.dto.login.AuthUserDto;
+import com.senac.smart_hospedagem.api.application.dto.login.LoginRequestDto;
+import com.senac.smart_hospedagem.api.domain.entity.Usuario;
+import com.senac.smart_hospedagem.api.application.services.TokenService;
+import com.senac.smart_hospedagem.api.application.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -13,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

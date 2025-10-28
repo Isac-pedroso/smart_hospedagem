@@ -1,4 +1,4 @@
-package com.senac.aula.config;
+package com.senac.smart_hospedagem.api.infra.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.info.Info;

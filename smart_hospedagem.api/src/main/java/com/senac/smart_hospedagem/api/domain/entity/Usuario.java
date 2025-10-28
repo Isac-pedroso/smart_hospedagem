@@ -1,6 +1,5 @@
-package com.senac.smart_hospedagem.api.entity;
+package com.senac.smart_hospedagem.api.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

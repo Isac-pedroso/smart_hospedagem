@@ -1,4 +1,4 @@
-package com.senac.smart_hospedagem.api.config;
+package com.senac.smart_hospedagem.api.infra.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

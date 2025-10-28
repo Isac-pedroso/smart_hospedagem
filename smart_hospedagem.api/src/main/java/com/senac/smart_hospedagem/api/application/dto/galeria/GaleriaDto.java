@@ -1,7 +1,6 @@
-package com.senac.smart_hospedagem.api.dto;
+package com.senac.smart_hospedagem.api.application.dto.galeria;
 
-import com.senac.smart_hospedagem.api.entity.Galeria;
-import jakarta.persistence.*;
+import com.senac.smart_hospedagem.api.domain.entity.Galeria;
 
 public class GaleriaDto {
     public GaleriaDto(){

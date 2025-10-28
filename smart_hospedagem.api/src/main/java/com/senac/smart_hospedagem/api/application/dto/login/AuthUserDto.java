@@ -1,6 +1,6 @@
-package com.senac.smart_hospedagem.api.dto;
+package com.senac.smart_hospedagem.api.application.dto.login;
 
-import com.senac.smart_hospedagem.api.entity.Usuario;
+import com.senac.smart_hospedagem.api.domain.entity.Usuario;
 
 public class AuthUserDto {
     private Long id;
