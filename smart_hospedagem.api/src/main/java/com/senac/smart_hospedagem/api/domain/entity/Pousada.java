@@ -1,28 +1,21 @@
 package com.senac.smart_hospedagem.api.domain.entity;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-public class Usuario{
-
-    public Usuario(){}
-
+public class Pousada {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String email;
     private String senha;
-    private String nome;
+    private String razao_social;
+    private String nome_responsavel;
     private String role;
-    private Date dt_nascimento;
     private LocalDateTime dt_cadastro;
     private LocalDateTime dt_exclusao;
 
@@ -50,12 +43,20 @@ public class Usuario{
         this.senha = senha;
     }
 
-    public String getNome() {
-        return nome;
+    public String getRazao_social() {
+        return razao_social;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setRazao_social(String razao_social) {
+        this.razao_social = razao_social;
+    }
+
+    public String getNome_responsavel() {
+        return nome_responsavel;
+    }
+
+    public void setNome_responsavel(String nome_responsavel) {
+        this.nome_responsavel = nome_responsavel;
     }
 
     public String getRole() {
@@ -64,14 +65,6 @@ public class Usuario{
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public Date getDt_nascimento() {
-        return dt_nascimento;
-    }
-
-    public void setDt_nascimento(Date dt_nascimento) {
-        this.dt_nascimento = dt_nascimento;
     }
 
     public LocalDateTime getDt_cadastro() {

@@ -1,7 +1,6 @@
 package com.senac.smart_hospedagem.api.presetation;
 
-import com.senac.smart_hospedagem.api.application.dto.login.AuthUserDto;
-import com.senac.smart_hospedagem.api.application.dto.login.LoginRequestDto;
+import com.senac.smart_hospedagem.api.application.dto.loginUsuario.LoginUsuarioRequestDto;
 import com.senac.smart_hospedagem.api.domain.entity.Usuario;
 import com.senac.smart_hospedagem.api.application.services.TokenService;
 import com.senac.smart_hospedagem.api.application.services.UsuarioService;
@@ -30,7 +29,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "Login", description = "Metodo responsavel por realizar login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDto request){
+    public ResponseEntity<?> login(@RequestBody LoginUsuarioRequestDto request){
         if(!usuarioService.validarSenha(request)){
             return ResponseEntity.badRequest().body("Usuario ou senha invalidos!");
         }
