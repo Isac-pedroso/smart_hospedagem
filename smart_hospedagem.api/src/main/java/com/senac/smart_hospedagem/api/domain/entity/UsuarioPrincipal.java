@@ -39,14 +39,17 @@ public class UsuarioPrincipal implements UserDetails {
     private Long id;
     @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String senha;
     private String role;
 
 
-    @OneToOne(mappedBy = "usuarioPrincipal")
+    @OneToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToOne(mappedBy = "usuarioPrincipal")
+    @OneToOne
+    @JoinColumn(name = "pousada_id")
     private Pousada pousada;
 
 

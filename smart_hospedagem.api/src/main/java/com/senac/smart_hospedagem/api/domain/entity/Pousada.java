@@ -11,8 +11,7 @@ public class Pousada {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "id")
+    @OneToOne(mappedBy = "pousada")
     private UsuarioPrincipal usuarioPrincipal;
 
     @Column(nullable = false)

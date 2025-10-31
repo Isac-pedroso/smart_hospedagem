@@ -10,8 +10,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "id")
+    @OneToOne(mappedBy = "usuario")
     private UsuarioPrincipal usuarioPrincipal;
 
     @Column(nullable = false)
