@@ -21,38 +21,9 @@ public class Token {
 
     private String token;
 
-    public Token(Long id, String token, UsuarioPrincipal usuarioPrincipal){
-        this.setId(id);
-        this.setToken(token);
-        this.setUsuarioPrincipal(usuarioPrincipal);
-    }
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuarioPrincipal_id", nullable = true)
     private UsuarioPrincipal usuarioPrincipal;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public UsuarioPrincipal getUsuarioPrincipal() {
-        return usuarioPrincipal;
-    }
-
-    public void setUsuarioPrincipal(UsuarioPrincipal usuarioPrincipal) {
-        this.usuarioPrincipal = usuarioPrincipal;
-    }
 }

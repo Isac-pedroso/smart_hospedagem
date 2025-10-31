@@ -50,6 +50,8 @@ public class UsuarioPrincipal implements UserDetails {
     private Pousada pousada;
 
 
+
+
     private LocalDateTime dt_cadastro;
     private LocalDateTime dt_exclusao;
 
