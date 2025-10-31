@@ -1,14 +1,14 @@
 package com.senac.smart_hospedagem.api.domain.repository;
 
-import com.senac.smart_hospedagem.api.domain.entity.Usuario;
+import com.senac.smart_hospedagem.api.domain.entity.UsuarioPrincipal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface UsuarioPrincipalRepository extends JpaRepository<UsuarioPrincipal, Long> {
     boolean existsByEmailContainingAndSenha(String email, String senha);
-    Optional<Usuario> findByEmail(String email);
+    Optional<UsuarioPrincipal> findByEmail(String email);
 
 }

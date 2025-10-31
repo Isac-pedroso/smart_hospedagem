@@ -17,13 +17,13 @@ public class Galeria {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    private UsuarioPrincipal usuario;
 
-    public Usuario getUsuario() {
+    public UsuarioPrincipal getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(UsuarioPrincipal usuario) {
         this.usuario = usuario;
     }
 

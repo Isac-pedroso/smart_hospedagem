@@ -2,7 +2,7 @@ package com.senac.smart_hospedagem.api.application.services;
 
 import com.senac.smart_hospedagem.api.application.dto.galeria.GaleriaDto;
 import com.senac.smart_hospedagem.api.domain.entity.Galeria;
-import com.senac.smart_hospedagem.api.domain.entity.Usuario;
+import com.senac.smart_hospedagem.api.domain.entity.UsuarioPrincipal;
 import com.senac.smart_hospedagem.api.domain.repository.GaleriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class GaleriaService {
     public Galeria cadastrar(GaleriaDto galeriaDto){
 
         Galeria galeriaPersist = new Galeria();
-        Usuario usuario = new Usuario();
+        UsuarioPrincipal usuario = new UsuarioPrincipal();
 
         usuario.setId(galeriaDto.getUsuario());
 

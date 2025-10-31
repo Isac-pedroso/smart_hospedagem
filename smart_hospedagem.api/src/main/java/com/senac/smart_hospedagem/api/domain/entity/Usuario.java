@@ -1,30 +1,23 @@
 package com.senac.smart_hospedagem.api.domain.entity;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-public class Usuario{
-
-    public Usuario(){}
-
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    private UsuarioPrincipal usuarioPrincipal;
+
     @Column(nullable = false)
-    private String email;
-    private String senha;
     private String nome;
-    private String role;
+    private String cpf;
     private Date dt_nascimento;
-    private LocalDateTime dt_cadastro;
-    private LocalDateTime dt_exclusao;
 
     public Long getId() {
         return id;
@@ -34,20 +27,12 @@ public class Usuario{
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public UsuarioPrincipal getUsuarioPrincipal() {
+        return usuarioPrincipal;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setUsuarioPrincipal(UsuarioPrincipal usuarioPrincipal) {
+        this.usuarioPrincipal = usuarioPrincipal;
     }
 
     public String getNome() {
@@ -58,12 +43,12 @@ public class Usuario{
         this.nome = nome;
     }
 
-    public String getRole() {
-        return role;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public Date getDt_nascimento() {
@@ -72,21 +57,5 @@ public class Usuario{
 
     public void setDt_nascimento(Date dt_nascimento) {
         this.dt_nascimento = dt_nascimento;
-    }
-
-    public LocalDateTime getDt_cadastro() {
-        return dt_cadastro;
-    }
-
-    public void setDt_cadastro(LocalDateTime dt_cadastro) {
-        this.dt_cadastro = dt_cadastro;
-    }
-
-    public LocalDateTime getDt_exclusao() {
-        return dt_exclusao;
-    }
-
-    public void setDt_exclusao(LocalDateTime dt_exclusao) {
-        this.dt_exclusao = dt_exclusao;
     }
 }

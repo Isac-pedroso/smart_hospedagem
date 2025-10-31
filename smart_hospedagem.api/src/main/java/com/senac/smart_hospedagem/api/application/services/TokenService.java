@@ -4,8 +4,12 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.senac.smart_hospedagem.api.application.dto.loginUsuario.LoginUsuarioRequestDto;
+import com.senac.smart_hospedagem.api.application.dto.usuarioPrincipal.UsuarioPrincipalDto;
 import com.senac.smart_hospedagem.api.domain.entity.Token;
+import com.senac.smart_hospedagem.api.domain.entity.UsuarioPrincipal;
 import com.senac.smart_hospedagem.api.domain.repository.TokenRepository;
+import com.senac.smart_hospedagem.api.domain.repository.UsuarioPrincipalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,21 +31,25 @@ public class TokenService {
     @Autowired
     private TokenRepository tokenRepository;
 
-    public String gerarToken(String usuario, String senha, String role, String email){
+    @Autowired
+    private UsuarioPrincipalRepository usuarioPrincipalRepository;
+
+    public String gerarToken(LoginUsuarioRequestDto loginRequestDto){
+        var usuarioPrincipal = usuarioPrincipalRepository.findByEmail(loginRequestDto.email()).orElse(null);
+
         Algorithm algorithm = Algorithm.HMAC256(secret);
 
         String token = JWT.create()
                 .withIssuer(emissor)
-                .withSubject(email)
-                .withClaim("role", role)
+                .withSubject(loginRequestDto.email())
                 .withExpiresAt(this.gerarDataExpiracao())
                 .sign(algorithm);
-        tokenRepository.save(new Token(null, token, usuario, email));
+        tokenRepository.save(new Token(null, token, usuarioPrincipal));
 
         return token;
     }
 
-    public String validarToken(String token){
+    public UsuarioPrincipalDto validarToken(String token){
         Algorithm algorithm = Algorithm.HMAC256(secret);
         JWTVerifier verifier = JWT.require(algorithm)
                 .withIssuer(emissor)
@@ -53,7 +61,7 @@ public class TokenService {
             throw new IllegalArgumentException("Token invalido");
         }
 
-        return tokenResult.getEmail();
+        return new UsuarioPrincipalDto(tokenResult.getUsuarioPrincipal());
     }
 
     public Instant gerarDataExpiracao(){
@@ -61,15 +69,5 @@ public class TokenService {
         dataAtual = dataAtual.plusMinutes(tempo_validacao);
 
         return dataAtual.toInstant(ZoneOffset.of("-03:00"));
-    }
-    
-    public String getRolePeloToken(String token){
-        Algorithm algorithm = Algorithm.HMAC256(secret);
-        JWTVerifier verifier = JWT.require(algorithm)
-                .withIssuer(emissor)
-                .build();
-        DecodedJWT decodedJWT = verifier.verify(token);
-
-        return decodedJWT.getClaim("role").asString();
     }
 }

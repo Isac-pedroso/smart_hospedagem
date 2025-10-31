@@ -10,14 +10,15 @@ public class Pousada {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "id")
+    private UsuarioPrincipal usuarioPrincipal;
+
     @Column(nullable = false)
-    private String email;
-    private String senha;
+    private String nome_fantasia;
     private String razao_social;
     private String nome_responsavel;
-    private String role;
-    private LocalDateTime dt_cadastro;
-    private LocalDateTime dt_exclusao;
 
     public Long getId() {
         return id;
@@ -27,20 +28,20 @@ public class Pousada {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public UsuarioPrincipal getUsuarioPrincipal() {
+        return usuarioPrincipal;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsuarioPrincipal(UsuarioPrincipal usuarioPrincipal) {
+        this.usuarioPrincipal = usuarioPrincipal;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getNome_fantasia() {
+        return nome_fantasia;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setNome_fantasia(String nome_fantasia) {
+        this.nome_fantasia = nome_fantasia;
     }
 
     public String getRazao_social() {
@@ -57,29 +58,5 @@ public class Pousada {
 
     public void setNome_responsavel(String nome_responsavel) {
         this.nome_responsavel = nome_responsavel;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public LocalDateTime getDt_cadastro() {
-        return dt_cadastro;
-    }
-
-    public void setDt_cadastro(LocalDateTime dt_cadastro) {
-        this.dt_cadastro = dt_cadastro;
-    }
-
-    public LocalDateTime getDt_exclusao() {
-        return dt_exclusao;
-    }
-
-    public void setDt_exclusao(LocalDateTime dt_exclusao) {
-        this.dt_exclusao = dt_exclusao;
     }
 }
