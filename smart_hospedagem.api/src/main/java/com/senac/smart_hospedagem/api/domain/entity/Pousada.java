@@ -1,5 +1,6 @@
 package com.senac.smart_hospedagem.api.domain.entity;
 
+import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaRequestDto;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -15,9 +16,28 @@ public class Pousada {
     private UsuarioPrincipal usuarioPrincipal;
 
     @Column(nullable = false)
+    private String cnpj;
     private String nome_fantasia;
     private String razao_social;
     private String nome_responsavel;
+
+
+    public Pousada(PousadaRequestDto requestDto){
+        this.setId(requestDto.id());
+        this.setNome_fantasia(requestDto.nome_fantasia());
+        this.setNome_responsavel(requestDto.nome_responsavel());
+        this.setRazao_social(requestDto.razao_social());
+        this.setUsuarioPrincipal(requestDto.usuarioPrincipal());
+        this.setCnpj(requestDto.cnpj());
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
 
     public Long getId() {
         return id;

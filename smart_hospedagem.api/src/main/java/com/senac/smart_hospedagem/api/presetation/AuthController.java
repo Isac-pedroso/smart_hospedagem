@@ -2,17 +2,14 @@ package com.senac.smart_hospedagem.api.presetation;
 
 import com.senac.smart_hospedagem.api.application.dto.loginUsuario.LoginUsuarioRequestDto;
 import com.senac.smart_hospedagem.api.application.dto.loginUsuario.LoginUsuarioResponseDto;
-import com.senac.smart_hospedagem.api.domain.entity.UsuarioPrincipal;
 import com.senac.smart_hospedagem.api.application.services.TokenService;
-import com.senac.smart_hospedagem.api.application.services.UsuarioService;
+import com.senac.smart_hospedagem.api.application.services.UsuarioPrincipalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 
 @RestController
@@ -23,7 +20,7 @@ public class AuthController {
     private TokenService tokenService;
 
     @Autowired
-    private UsuarioService usuarioService;
+    private UsuarioPrincipalService usuarioService;
 
     @PostMapping("/login")
     @Operation(summary = "Login", description = "Metodo responsavel por realizar login")

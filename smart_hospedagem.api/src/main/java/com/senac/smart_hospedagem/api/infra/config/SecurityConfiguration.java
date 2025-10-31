@@ -28,6 +28,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.POST, "/galeriaAdmin/cadastrar").authenticated()
                                 .requestMatchers(HttpMethod.GET,"/galeriaAdmin/listar").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/galeriaAdmin/listarPorUsuario/**").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/usuarioPrincipal/cadastrar").permitAll()
                                 .requestMatchers("/swagger-resources/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()
