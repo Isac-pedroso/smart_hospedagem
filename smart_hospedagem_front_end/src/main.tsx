@@ -3,14 +3,15 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import AppRoutes from './route.tsx';
-import { AuthProvider } from './contexts/AuthContext.tsx';
+import { Provider } from 'react-redux';
+import { store } from './store/store.ts';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AuthProvider>
+    <Provider store={store}>
       <BrowserRouter>
         <AppRoutes />
       </BrowserRouter>
-    </AuthProvider>
+    </Provider>
   </StrictMode>
 );

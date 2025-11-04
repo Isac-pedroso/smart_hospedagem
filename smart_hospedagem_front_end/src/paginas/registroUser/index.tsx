@@ -1,37 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Cadastro() {
-  
+
+  const [escolhaCadastro, setEscolhaCadastro] = useState<Number | null>(1);
+
   return (
-    <div 
+    <div
       className="d-flex align-items-center justify-content-center vh-100"
-      style={{ 
+      style={{
         background: "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center/cover"
       }}
     >
       <div className="card p-4 shadow-lg" style={{ maxWidth: "450px", width: "100%", borderRadius: "15px" }}>
         <h3 className="text-center mb-4 fw-bold">Cadastro</h3>
-        
+
         <form>
           <div className="mb-3">
-            <label htmlFor="nome" className="form-label">Nome Completo</label>
-            <input type="text" className="form-control" id="nome" placeholder="Digite seu nome completo" />
+            <label htmlFor="escolha_cadastro" className="form-label">Sou:</label>
+            <select className="form-control" name="escolha_cadastro" id="" onChange={e => setEscolhaCadastro(Number(e.target.value))}>
+              <option value="1">Hospede</option>
+              <option value="2">Pousada</option>
+            </select>
           </div>
+          {escolhaCadastro == 1 && (
+            <>
+              <div className="mb-3">
+                <label htmlFor="nome" className="form-label">Nome Completo</label>
+                <input type="text" className="form-control" id="nome" placeholder="Digite seu nome completo" />
+              </div>
 
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">E-mail</label>
-            <input type="email" className="form-control" id="email" placeholder="Digite seu e-mail" />
-          </div>
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">E-mail</label>
+                <input type="email" className="form-control" id="email" placeholder="Digite seu e-mail" />
+              </div>
 
-          <div className="mb-3">
-            <label htmlFor="senha" className="form-label">Senha</label>
-            <input type="password" className="form-control" id="senha" placeholder="Crie uma senha" />
-          </div>
+              <div className="mb-3">
+                <label htmlFor="senha" className="form-label">Senha</label>
+                <input type="password" className="form-control" id="senha" placeholder="Crie uma senha" />
+              </div>
 
-          <div className="mb-3">
-            <label htmlFor="confirmarSenha" className="form-label">Confirmar Senha</label>
-            <input type="password" className="form-control" id="confirmarSenha" placeholder="Confirme sua senha" />
-          </div>
+              <div className="mb-3">
+                <label htmlFor="confirmarSenha" className="form-label">Confirmar Senha</label>
+                <input type="password" className="form-control" id="confirmarSenha" placeholder="Confirme sua senha" />
+              </div>
+            </>
+          )}
+          {
+            escolhaCadastro == 2 && (
+              <>
+                <h1>Pousada</h1>
+              </>
+            )
+          }
+
 
           <div className="d-grid">
             <button type="submit" className="btn btn-success">Cadastrar</button>

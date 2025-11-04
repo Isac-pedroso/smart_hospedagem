@@ -1,150 +1,126 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../css/home.css'
 import { useEffect, useState } from 'react';
-import type { Galeria } from '../../models/Galeria';
-import GaleriaService from '../../services/GaleriaService';
-import AxiosConfiguracao from '../../api/axiosConfig';
+// import type { Galeria } from '../../models/Galeria';
+// import GaleriaService from '../../services/GaleriaService';
+// import AxiosConfiguracao from '../../api/axiosConfig';
 
 
 function Home() {
-  const api = new AxiosConfiguracao("http://localhost:8080");
-  const galeriaService = new GaleriaService(api);
+  // const api = new AxiosConfiguracao("http://localhost:8080");
+  // const galeriaService = new GaleriaService(api);
 
-  const [fotos, setFotos] = useState<Galeria[]>([])
+  // const [fotos, setFotos] = useState<Galeria[]>([])
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
 
-  useEffect(()=>{
+  useEffect(() => {
     handleListarFotos();
   }, []);
 
   const handleListarFotos = async () => {
-    try{
-      const data = await galeriaService.listar();
-      console.log(data);
-      setFotos(data);
-    }catch(error){
+    try {
+      // const data = await galeriaService.listar();
+      // console.log(data);
+      // setFotos(data);
+    } catch (error) {
       console.error(error);
       setError("Problema ao trazer as images!");
-    }finally{
+    } finally {
       setLoading(false);
     }
   }
   return (
 
-    
+
     <>
-      {/* Hero Section */}
-      <section className="hero text-center d-flex align-items-center" style={{paddingTop: '200px'}}>
-        <div className="container">
-          <h1 className="display-4 fw-bold">Bem-vindo à Pousada Paraíso Natural</h1>
-          <p className="lead">
-            Um lugar onde o conforto encontra a natureza deslumbrante.
-          </p>
-          <a href="#galeria" className="btn btn-success btn-lg mt-3">
-            Explorar
+     
+
+      {/* HERO */}
+      <section className="hero d-flex align-items-center">
+        <div className="hero-content text-center">
+          <h1>Conecte-se à Natureza</h1>
+          <p>Descubra as pousadas mais encantadoras do Brasil 🌺</p>
+          <a href="#pousadas" className="btn btn-vermais">
+            Ver Pousadas
           </a>
         </div>
       </section>
 
-      {/* Galeria de fotos */}
-      <main>
-        <div className="container my-5" id="galeria">
-          <div className="text-center mb-5">
-            <h2 className="fw-bold text-success">Nossa Galeria</h2>
-            <p className="text-muted">
-              Um pouco da beleza que você vai encontrar aqui
-            </p>
-          </div>
-          <div className="row g-4">
-            {fotos.map((item) => (
-            <div className="col-md-4 col-sm-6">
-              <div className="gallery-item">
-                <img
-                  src="https://picsum.photos/600/400?random=1"
-                  className="img-fluid rounded shadow"
-                  alt={item.titulo}
-                />
+      {/* POUSADAS */}
+      <section id="pousadas" className="pousadas container">
+        <div className="text-center mb-5">
+          <h2 className="fw-bold text-success">Nossas Pousadas</h2>
+          <p className="text-muted">
+            Hospede-se em locais paradisíacos e sinta o conforto da natureza.
+          </p>
+        </div>
+
+        <div className="row g-4">
+          {/* Card 1 */}
+          <div className="col-md-4">
+            <div className="card">
+              <img
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+                className="card-img-top"
+                alt="Pousada das Palmeiras"
+              />
+              <div className="card-body">
+                <h5 className="card-title text-success">Pousada das Palmeiras</h5>
+                <p className="card-text">
+                  Entre montanhas e trilhas, perfeita para relaxar e recarregar as energias.
+                </p>
+                <button className="btn btn-vermais">Reservar</button>
               </div>
             </div>
-            ))}
+          </div>
+
+          {/* Card 2 */}
+          <div className="col-md-4">
+            <div className="card">
+              <img
+                src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"
+                className="card-img-top"
+                alt="Pousada do Lago Verde"
+              />
+              <div className="card-body">
+                <h5 className="card-title text-success">Pousada do Lago Verde</h5>
+                <p className="card-text">
+                  Vista deslumbrante e chalés aconchegantes rodeados por natureza viva.
+                </p>
+                <button className="btn btn-vermais">Reservar</button>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3 */}
+          <div className="col-md-4">
+            <div className="card">
+              <img
+                src="https://images.unsplash.com/photo-1551888419-7f83d63db87d?auto=format&fit=crop&w=800&q=80"
+                className="card-img-top"
+                alt="Pousada Encanto da Serra"
+              />
+              <div className="card-body">
+                <h5 className="card-title text-success">Pousada Encanto da Serra</h5>
+                <p className="card-text">
+                  Um refúgio natural para quem busca tranquilidade e um belo nascer do sol.
+                </p>
+                <button className="btn btn-vermais">Reservar</button>
+              </div>
+            </div>
           </div>
         </div>
-      </main>
+      </section>
 
-      {/* Seção Quartos */}
-      <section className="bg-light py-5" id="quartos">
-        <div className="container">
-          <div className="text-center mb-5">
-            <h2 className="fw-bold text-primary">Nossos Quartos</h2>
-            <p className="text-muted">
-              Conforto e aconchego para tornar sua estadia inesquecível
-            </p>
-          </div>
-
-          <div className="row g-4">
-            <div className="col-md-4">
-              <div className="card shadow border-0 h-100">
-                <img
-                  src="https://picsum.photos/600/400?random=11"
-                  className="card-img-top"
-                  alt="Quarto Standard"
-                />
-                <div className="card-body">
-                  <h5 className="card-title">Quarto Standard</h5>
-                  <p className="card-text">
-                    Ideal para quem busca conforto com excelente custo-benefício.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="card shadow border-0 h-100">
-                <img
-                  src="https://picsum.photos/600/400?random=12"
-                  className="card-img-top"
-                  alt="Quarto Luxo"
-                />
-                <div className="card-body">
-                  <h5 className="card-title">Quarto Luxo</h5>
-                  <p className="card-text">
-                    Espaçoso, elegante e com uma vista incrível para a natureza.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="card shadow border-0 h-100">
-                <img
-                  src="https://picsum.photos/600/400?random=13"
-                  className="card-img-top"
-                  alt="Suíte Master"
-                />
-                <div className="card-body">
-                  <h5 className="card-title">Suíte Master</h5>
-                  <p className="card-text">
-                    Luxo completo: jacuzzi privativa, varanda e decoração
-                    exclusiva.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Alerta sobre disponibilidade */}
-          <div className="alert alert-info text-center mt-5 shadow-sm" role="alert">
-            <h5 className="fw-bold">Quer saber mais?</h5>
-            <p className="mb-2">
-              Acesse nossa aba de <strong>Quartos Disponíveis</strong> para ver
-              horários e reservas em tempo real.
-            </p>
-            <a href="/login" className="btn btn-outline-primary">
-              Fazer login para acessar disponibilidade
-            </a>
-          </div>
+      {/* SOBRE */}
+      <section id="sobre" className="sobre">
+        <div className="container text-center">
+          <h2>Sobre a Smart Hospedagem</h2>
+          <p className="mt-3">
+            Nosso sistema conecta viajantes com as melhores pousadas do Brasil, promovendo experiências únicas, sustentáveis e em harmonia com a natureza.
+          </p>
         </div>
       </section>
     </>

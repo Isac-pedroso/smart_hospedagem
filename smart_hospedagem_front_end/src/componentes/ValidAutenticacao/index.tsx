@@ -1,18 +1,18 @@
 // src/components/RequireAuth.tsx
 import { type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
+import { store } from "../../store/store";
+import { useSelector } from "react-redux";
 
 interface ValidAutenticacaoProps {
   children: ReactNode ;
 }
 
 const ValidAutenticacao: React.FC<ValidAutenticacaoProps> = ({ children }) => {
-  const { user, loading } = useAuth();
-
-  if (loading) return null; // ou um spinner
-
-  if (!user) {
+  
+  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
+  
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 

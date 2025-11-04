@@ -1,26 +1,57 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, {useEffect, useState} from 'react';
-import { useAuth } from "../../contexts/AuthContext";
+import React, { useEffect, useState } from 'react';
+import { login } from "../../services/AuthService";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../store/authSlice";
+import { getDadosUsuarioPrincipal } from "../../services/userPrincipalService";
 
-const Login: React.FC = () => {
-    const { login } = useAuth();
+const Login = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean | null>(false)
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
+    const [loading, setLoading] = useState<boolean | null>(false);
 
-    const handleLogin = async () => {
-        try{
-            await login(email, senha);
-            navigate("/");
-        }catch(error){
-            setError("Email ou senha incorreto");
-        }finally{
-            setLoading(false);
+    useEffect(() => {
+
+    }, [error]);
+
+    const [formData, setFormData] = useState({
+        email: "",
+        senha: ""
+    })
+
+    const handlerLogin = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        setLoading(true);
+        console.log(formData)
+        const loginResponse = await login(formData);
+        console.log(loginResponse)
+        if (loginResponse.token === "") {
+            alert("Login invalido");
+            return;
         }
-    }
+
+        const dadosUsuarioPrincipal = await getDadosUsuarioPrincipal(loginResponse.token);
+        
+        if(dadosUsuarioPrincipal.email === "" && dadosUsuarioPrincipal.nome === "" && dadosUsuarioPrincipal.role === ""){
+            alert("Problema ao efetuar login!");
+            return;
+        }
+        dispatch(loginSuccess({ user: { email: formData.email, nome: dadosUsuarioPrincipal.nome, role: dadosUsuarioPrincipal.role }, token: loginResponse.token }))
+        navigate("/");
+    };
+
+
+    const handlerChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
 
     return (
         <div
@@ -35,35 +66,37 @@ const Login: React.FC = () => {
                 <h3 className="text-center mb-4 fw-bold">Login</h3>
 
                 {/* Formulário de Login */}
-                <form>
+                <form onSubmit={handlerLogin}>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label fw-semibold">E-mail</label>
                         <input
-                            onChange={e => setEmail(e.target.value)}
+                            onChange={handlerChangeInput}
                             type="email"
+                            name="email"
                             className="form-control"
                             id="email"
                             placeholder="Digite seu e-mail"
-                            value={email}
+                            value={formData.email}
                         />
                     </div>
 
                     <div className="mb-3">
                         <label htmlFor="senha" className="form-label fw-semibold">Senha</label>
                         <input
-                            onChange={e => setSenha(e.target.value)}
+                            onChange={handlerChangeInput}
                             type="password"
                             className="form-control"
                             id="senha"
+                            name="senha"
                             placeholder="Digite sua senha"
-                            value={senha}
+                            value={formData.senha}
                         />
                     </div>
 
                     <div className="d-grid mb-2">
-                        <button type="button" className="btn btn-success" onClick={handleLogin}>Entrar</button>
+                        <button type="submit" className="btn btn-success">Entrar</button>
                     </div>
-                    
+
                     <div className="text-center mb-3">
                         <a href="#" className="small">Esqueceu a senha?</a>
                     </div>
@@ -78,7 +111,7 @@ const Login: React.FC = () => {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
 export default Login;
