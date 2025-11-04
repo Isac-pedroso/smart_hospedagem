@@ -25,5 +25,4 @@ public class Token {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuarioPrincipal_id", nullable = true)
     private UsuarioPrincipal usuarioPrincipal;
-
 }

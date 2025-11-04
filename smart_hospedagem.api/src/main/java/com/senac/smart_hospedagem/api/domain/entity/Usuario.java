@@ -1,5 +1,6 @@
 package com.senac.smart_hospedagem.api.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.senac.smart_hospedagem.api.application.dto.usuario.UsuarioRequestDto;
 import jakarta.persistence.*;
 
@@ -12,6 +13,7 @@ public class Usuario {
     private Long id;
 
     @OneToOne(mappedBy = "usuario")
+    @JsonIgnore
     private UsuarioPrincipal usuarioPrincipal;
 
     @Column(nullable = false)
@@ -19,12 +21,14 @@ public class Usuario {
     private String cpf;
     private Date dt_nascimento;
 
+    public Usuario(){
+
+    }
     public Usuario(UsuarioRequestDto usuarioRequestDto){
         this.id = usuarioRequestDto.id();
         this.nome = usuarioRequestDto.nome();
         this.cpf = usuarioRequestDto.cpf();
         this.dt_nascimento = usuarioRequestDto.dt_nascimento();
-        this.usuarioPrincipal = usuarioRequestDto.usuarioPrincipal();
     }
 
 

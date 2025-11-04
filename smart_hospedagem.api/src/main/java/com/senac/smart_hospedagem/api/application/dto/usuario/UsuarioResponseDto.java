@@ -5,13 +5,12 @@ import com.senac.smart_hospedagem.api.domain.entity.UsuarioPrincipal;
 
 import java.util.Date;
 
-public record UsuarioResponseDto (Long id, String nome, String cpf, Date dt_nascimento, UsuarioPrincipal usuarioPrincipal){
+public record UsuarioResponseDto (Long id, String nome, String cpf, Date dt_nascimento){
     public UsuarioResponseDto(Usuario usuario){
         this(usuario.getId(),
             usuario.getCpf(),
             usuario.getNome(),
-            usuario.getDt_nascimento(),
-            usuario.getUsuarioPrincipal()
+            usuario.getDt_nascimento()
         );
     }
 }

@@ -1,5 +1,6 @@
 package com.senac.smart_hospedagem.api.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaRequestDto;
 import jakarta.persistence.*;
 
@@ -13,6 +14,7 @@ public class Pousada {
     private Long id;
 
     @OneToOne(mappedBy = "pousada")
+    @JsonIgnore
     private UsuarioPrincipal usuarioPrincipal;
 
     @Column(nullable = false)
@@ -21,13 +23,15 @@ public class Pousada {
     private String razao_social;
     private String nome_responsavel;
 
+    public Pousada(){
+
+    }
 
     public Pousada(PousadaRequestDto requestDto){
         this.setId(requestDto.id());
         this.setNome_fantasia(requestDto.nome_fantasia());
         this.setNome_responsavel(requestDto.nome_responsavel());
         this.setRazao_social(requestDto.razao_social());
-        this.setUsuarioPrincipal(requestDto.usuarioPrincipal());
         this.setCnpj(requestDto.cnpj());
     }
 
