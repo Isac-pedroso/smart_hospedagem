@@ -1,67 +1,92 @@
 import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import RegistroPousada from "../../componentes/registroUser/registroPousada";
+import RegistroHospede from "../../componentes/registroUser/registroHospede";
+import { cadastraUsuario } from "../../services/userPrincipalService";
+import type { UserPrincipalCadastroRequest } from "../../types/userPrincipal";
+
 
 function Cadastro() {
+  const [escolhaCadastro, setEscolhaCadastro] = useState<number>(1);
 
-  const [escolhaCadastro, setEscolhaCadastro] = useState<Number | null>(1);
+
+  const handleCadastroSubmit = async (dados: any) => {
+    console.log("Dados: ", dados);
+
+
+
+    const payload: UserPrincipalCadastroRequest = {
+      usuarioPrincipalRequestDto: {
+        email: dados.email,
+        senha: dados.senha,
+        tipo_cadastro: escolhaCadastro 
+      },
+      usuarioRequestDto: escolhaCadastro === 1 ? {
+        nome: dados.nome,
+        cpf: dados.cpf,
+        dt_nascimento: dados.dt_nascimento
+      } : null,
+      pousadaRequestDto:  null
+    };
+
+    const responseCadastro = await cadastraUsuario(payload);
+    console.log(responseCadastro)
+  }
+
+
 
   return (
     <div
-      className="d-flex align-items-center justify-content-center vh-100"
+      className="d-flex align-items-center justify-content-center"
       style={{
-        background: "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center/cover"
+        minHeight: "100vh",
+        background:
+          "url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') no-repeat center center/cover",
+        paddingTop: "80px", // evita que a navbar fixe sobre o formulário
+        paddingBottom: "40px",
       }}
     >
-      <div className="card p-4 shadow-lg" style={{ maxWidth: "450px", width: "100%", borderRadius: "15px" }}>
-        <h3 className="text-center mb-4 fw-bold">Cadastro</h3>
+      <div
+        className="card p-4 shadow-lg bg-light"
+        style={{
+          maxWidth: "450px",
+          width: "100%",
+          borderRadius: "15px",
+          backdropFilter: "blur(6px)",
+          backgroundColor: "rgba(255,255,255,0.9)",
+        }}
+      >
+        <h3 className="text-center mb-4 fw-bold text-success">Cadastro</h3>
+        <div className="mb-3">
+          <label htmlFor="escolha_cadastro" className="form-label">
+            Sou:
+          </label>
+          <select
+            className="form-select"
+            name="escolha_cadastro"
+            onChange={(e) => setEscolhaCadastro(Number(e.target.value))}
+            value={escolhaCadastro}
+          >
+            <option value="1">Hóspede</option>
+            <option value="2">Pousada</option>
+          </select>
+        </div>
 
-        <form>
-          <div className="mb-3">
-            <label htmlFor="escolha_cadastro" className="form-label">Sou:</label>
-            <select className="form-control" name="escolha_cadastro" id="" onChange={e => setEscolhaCadastro(Number(e.target.value))}>
-              <option value="1">Hospede</option>
-              <option value="2">Pousada</option>
-            </select>
-          </div>
-          {escolhaCadastro == 1 && (
-            <>
-              <div className="mb-3">
-                <label htmlFor="nome" className="form-label">Nome Completo</label>
-                <input type="text" className="form-control" id="nome" placeholder="Digite seu nome completo" />
-              </div>
+        {/* --- Formulário de Hóspede --- */}
+        {escolhaCadastro === 1 && (
+          <RegistroHospede onSubmit={handleCadastroSubmit} />
+        )}
 
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">E-mail</label>
-                <input type="email" className="form-control" id="email" placeholder="Digite seu e-mail" />
-              </div>
+        {/* --- Formulário de Pousada --- */}
+        {escolhaCadastro === 2 && (
+          <RegistroPousada />
+        )}
 
-              <div className="mb-3">
-                <label htmlFor="senha" className="form-label">Senha</label>
-                <input type="password" className="form-control" id="senha" placeholder="Crie uma senha" />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="confirmarSenha" className="form-label">Confirmar Senha</label>
-                <input type="password" className="form-control" id="confirmarSenha" placeholder="Confirme sua senha" />
-              </div>
-            </>
-          )}
-          {
-            escolhaCadastro == 2 && (
-              <>
-                <h1>Pousada</h1>
-              </>
-            )
-          }
-
-
-          <div className="d-grid">
-            <button type="submit" className="btn btn-success">Cadastrar</button>
-          </div>
-
-          <div className="text-center mt-3">
-            <p>Já tem conta? <a href="#">Fazer Login</a></p>
-          </div>
-        </form>
+        <div className="text-center mt-3">
+          <p>
+            Já tem conta? <a href="#">Fazer Login</a>
+          </p>
+        </div>
       </div>
     </div>
   );

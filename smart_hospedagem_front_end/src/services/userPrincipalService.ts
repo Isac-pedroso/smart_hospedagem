@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { UserPrincipalResponse } from "../types/UserPrincipal";
+import type { UserPrincipalCadastroRequest, UserPrincipalResponse } from "../types/userPrincipal";
 import { store } from "../store/store";
 
 
@@ -24,5 +24,22 @@ export async function getDadosUsuarioPrincipal(token: string): Promise<UserPrinc
         return response.data;
     }catch(error){
         return {email: "", nome: "", role: ""};
+    }
+}
+
+export async function cadastraUsuario(data: UserPrincipalCadastroRequest): Promise<any> {
+    try{
+        console.log(data)
+        const response = await axios.post("http://localhost:8080/usuarioPrincipal/cadastrar", data)
+
+        console.log(response)
+        console.log(response.status)
+        if(response.status !== 200){
+            throw new Error("Ocorreu um problema ao cadastrar!");
+        }
+
+        return response.data;
+    }catch(error: any){
+        return error?.mesage || "Ocorreu um erro ao cadastrar.";
     }
 }

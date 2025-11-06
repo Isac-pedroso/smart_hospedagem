@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
-import { login } from "../../services/AuthService";
+import { login } from "../../services/authService";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../store/authSlice";
 import { getDadosUsuarioPrincipal } from "../../services/userPrincipalService";
