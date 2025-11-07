@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ConfirmModal = ({ titulo, mensagem, onConfirm, onClose }) => {
+export const ConfirmModal: React.FC<any> = ({ titulo, mensagem, onConfirm, onClose }) => {
     return (
         <div className="modal-backdrop">
             <div className="modal">
