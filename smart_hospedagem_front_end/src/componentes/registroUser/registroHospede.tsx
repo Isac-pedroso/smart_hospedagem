@@ -38,10 +38,10 @@ const RegistroHospede = ({ onSubmit }: Props) => {
     }
 
     const getInpuType = (campo: string) => {
-        
-        if(campo === "senha") return "password";
-        if(campo === "confirmarSenha") return "password";
-        if(campo === "dt_nascimento") return "date";
+
+        if (campo === "senha") return "password";
+        if (campo === "confirmarSenha") return "password";
+        if (campo === "dt_nascimento") return "date";
 
         return "text";
     };
@@ -49,26 +49,32 @@ const RegistroHospede = ({ onSubmit }: Props) => {
 
     const getLabelForInput = (campo: string) => {
 
-        if(campo === "confirmarSenha") return "Confirmar senha";
-        if(campo === "dt_nascimento") return "Data de nascimento";
-
-        return campo;
+        switch(campo){
+            case "cpf":
+                return "CPF";
+            case "nome":
+                return "Nome completo";
+            case "email":
+                return "E-mail";
+            case "senha":
+                return "Senha";
+            case "confirmarSenha":
+                return "Confirmar senha";
+            case "dt_nascimento":
+                return "Data de nascimento";
+            default:
+                return campo;
+        }
     }
 
-    const getInputPlaceHolder = (campo: string) => {
-        
-        if(campo === "confirmarSenha") return "Confirmar senha";
-        if(campo === "dt_nascimento") return "Data de nascimento";
-
-        return campo;
-    }
+    const campos: (keyof FormData)[] = ["cpf", "nome", "email", "senha", "confirmarSenha", "dt_nascimento"];
 
 
     return (
         <form onSubmit={handleSubmit}>
-            {["cpf", "nome", "email", "senha", "confirmarSenha", "dt_nascimento"].map((campo) => (
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">
+            {campos.map((campo) => (
+                <div className="mb-3" key={campo}>
+                    <label htmlFor={campo} className="form-label">
                         {getLabelForInput(campo)}
                     </label>
                     <input
@@ -76,8 +82,8 @@ const RegistroHospede = ({ onSubmit }: Props) => {
                         className="form-control"
                         id={campo}
                         name={campo}
-                        placeholder={getInputPlaceHolder(campo)}
-                        value={form[campo as keyof typeof form]}
+                        placeholder={getLabelForInput(campo)}
+                        value={form[campo]}
                         onChange={handlerChangeInput}
                     />
                 </div>

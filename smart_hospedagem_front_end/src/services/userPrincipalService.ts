@@ -38,8 +38,9 @@ export async function cadastraUsuario(data: UserPrincipalCadastroRequest): Promi
             throw new Error("Ocorreu um problema ao cadastrar!");
         }
 
-        return response.data;
+        return true;
     }catch(error: any){
-        return error?.mesage || "Ocorreu um erro ao cadastrar.";
+        console.error("Erro cadastro usuario: ", error)
+        return false;
     }
 }

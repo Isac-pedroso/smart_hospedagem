@@ -3,12 +3,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import RegistroPousada from "../../componentes/registroUser/registroPousada";
 import RegistroHospede from "../../componentes/registroUser/registroHospede";
 import { cadastraUsuario } from "../../services/userPrincipalService";
+import { useModal } from "../../componentes/modal/ModalContext";
 import type { UserPrincipalCadastroRequest } from "../../types/userPrincipal";
+import { ConfirmModal } from "../../componentes/modal/modals/modalsPadrao/ConfirmModal";
+import { AlertModal } from "../../componentes/modal/modals/modalsPadrao/AlertModal";
+import { useNavigate } from "react-router-dom";
 
 
 function Cadastro() {
   const [escolhaCadastro, setEscolhaCadastro] = useState<number>(1);
-
+  const { showModal } = useModal();
+  const { hideModal } = useModal();
+  const navigate = useNavigate();
 
   const handleCadastroSubmit = async (dados: any) => {
     console.log("Dados: ", dados);
@@ -19,18 +25,31 @@ function Cadastro() {
       usuarioPrincipalRequestDto: {
         email: dados.email,
         senha: dados.senha,
-        tipo_cadastro: escolhaCadastro 
+        tipo_cadastro: escolhaCadastro
       },
       usuarioRequestDto: escolhaCadastro === 1 ? {
         nome: dados.nome,
         cpf: dados.cpf,
         dt_nascimento: dados.dt_nascimento
       } : null,
-      pousadaRequestDto:  null
+      pousadaRequestDto: null
     };
 
     const responseCadastro = await cadastraUsuario(payload);
-    console.log(responseCadastro)
+    
+    if(responseCadastro){
+      showModal(AlertModal, {
+        titulo: "Mensagem cadastro",
+        mensagem: "Cadastrado com sucesso!",
+        onConfirm: navigate("/login")
+      })
+    }else{
+      showModal(AlertModal, {
+        titulo: "Mensagem cadastro",
+        mensagem: "Ocorreu um problema no cadastro!",
+        onConfirm: hideModal
+      })
+    }
   }
 
 
@@ -81,7 +100,6 @@ function Cadastro() {
         {escolhaCadastro === 2 && (
           <RegistroPousada />
         )}
-
         <div className="text-center mt-3">
           <p>
             Já tem conta? <a href="#">Fazer Login</a>

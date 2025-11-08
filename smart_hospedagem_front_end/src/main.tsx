@@ -6,13 +6,15 @@ import AppRoutes from './route.tsx';
 import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
 
-import { ModalProvider } from './componentes/modal/modals/'
+import { ModalProvider } from './componentes/modal/ModalContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <AppRoutes />
+        <ModalProvider>
+          <AppRoutes />
+        </ModalProvider>
       </BrowserRouter>
     </Provider>
   </StrictMode>

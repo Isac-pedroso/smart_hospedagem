@@ -2,15 +2,26 @@ import React from "react";
 
 export const ConfirmModal: React.FC<any> = ({ titulo, mensagem, onConfirm, onClose }) => {
     return (
-        <div className="modal-backdrop">
-            <div className="modal">
-                <h3>{titulo}</h3>
-                <p>{mensagem}</p>
-                <div className="actions">
-                    <button onClick={onConfirm}>Confirmar</button>
-                    <button onClick={onClose}>Cancelar</button>
+
+
+        <div className="modal" tabIndex={-1} style={{display: "flex", backgroundColor: "rgb(0,0,0,0.5)"}}>
+            <div className="modal-dialog" style={{width: "100%", marginTop: "20%"}}>
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">{titulo}</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={onClose}></button>
+                    </div>
+                    <div className="modal-body">
+                        <p>{mensagem}</p>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" onClick={onClose} data-bs-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-primary" onClick={onConfirm}>Save changes</button>
+                    </div>
                 </div>
             </div>
         </div>
+
+
     )
 }
