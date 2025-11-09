@@ -19,12 +19,11 @@ function Cadastro() {
   const handleCadastroSubmit = async (dados: any) => {
     console.log("Dados: ", dados);
 
-
-
     const payload: UserPrincipalCadastroRequest = {
       usuarioPrincipalRequestDto: {
         email: dados.email,
         senha: dados.senha,
+        confirmarSenha: dados.confirmarSenha,
         tipo_cadastro: escolhaCadastro
       },
       usuarioRequestDto: escolhaCadastro === 1 ? {
@@ -36,20 +35,22 @@ function Cadastro() {
     };
 
     const responseCadastro = await cadastraUsuario(payload);
-    
-    if(responseCadastro){
+
+    if (!responseCadastro.success) {
       showModal(AlertModal, {
         titulo: "Mensagem cadastro",
-        mensagem: "Cadastrado com sucesso!",
-        onConfirm: navigate("/login")
-      })
-    }else{
-      showModal(AlertModal, {
-        titulo: "Mensagem cadastro",
-        mensagem: "Ocorreu um problema no cadastro!",
+        mensagem: responseCadastro.message,
         onConfirm: hideModal
       })
+      return false;
     }
+    
+    showModal(AlertModal, {
+      titulo: "Mensagem cadastro",
+      mensagem: "Cadastrado com sucesso!",
+      onConfirm: navigate("/login")
+    })
+    return true;
   }
 
 

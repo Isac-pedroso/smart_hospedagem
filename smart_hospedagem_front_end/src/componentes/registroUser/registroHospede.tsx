@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import InputMask from "react-input-mask";
 
 interface Props {
     onSubmit: (data: any) => void,
@@ -49,7 +49,7 @@ const RegistroHospede = ({ onSubmit }: Props) => {
 
     const getLabelForInput = (campo: string) => {
 
-        switch(campo){
+        switch (campo) {
             case "cpf":
                 return "CPF";
             case "nome":
@@ -77,15 +77,28 @@ const RegistroHospede = ({ onSubmit }: Props) => {
                     <label htmlFor={campo} className="form-label">
                         {getLabelForInput(campo)}
                     </label>
-                    <input
-                        type={getInpuType(campo)}
-                        className="form-control"
-                        id={campo}
-                        name={campo}
-                        placeholder={getLabelForInput(campo)}
-                        value={form[campo]}
-                        onChange={handlerChangeInput}
-                    />
+                    {campo === "cpf" ?
+                        <InputMask
+                            mask={"999.999.999-99"}
+                            value={form[campo]}
+                            name={campo}
+                            id={campo}
+                            className="form-control"
+                            type={getInpuType(campo)}
+                            onChange={handlerChangeInput}
+                            placeholder="000.000.000-00"
+                        >
+                        </InputMask>
+                        :
+                        <input
+                            type={getInpuType(campo)}
+                            className="form-control"
+                            id={campo}
+                            name={campo}
+                            placeholder={getLabelForInput(campo)}
+                            value={form[campo]}
+                            onChange={handlerChangeInput}
+                        />}
                 </div>
             ))}
             <div className="d-grid">

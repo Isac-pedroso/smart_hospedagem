@@ -6,7 +6,9 @@ import AppRoutes from './route.tsx';
 import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
 
-import { ModalProvider } from './componentes/modal/ModalContext.tsx'
+import { ModalProvider } from './componentes/modal/ModalContext.tsx';
+
+import "bootstrap/dist/css/bootstrap.min.css";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
