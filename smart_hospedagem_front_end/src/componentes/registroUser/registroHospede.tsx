@@ -14,6 +14,8 @@ interface FormData {
     confirmarSenha: string
 }
 const RegistroHospede = ({ onSubmit }: Props) => {
+    const [loading, setLoading] = useState(false);
+
     const [form, setForm] = useState<FormData>({
         cpf: "",
         email: "",
@@ -32,9 +34,14 @@ const RegistroHospede = ({ onSubmit }: Props) => {
         }))
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        onSubmit(form)
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault(); 
+        setLoading(true);
+        try{
+            await onSubmit(form);
+        }finally{
+            setLoading(false);
+        }
     }
 
     const getInpuType = (campo: string) => {
@@ -74,9 +81,10 @@ const RegistroHospede = ({ onSubmit }: Props) => {
         <form onSubmit={handleSubmit}>
             {campos.map((campo) => (
                 <div className="mb-3" key={campo}>
-                    <label htmlFor={campo} className="form-label">
+                    <label style={{float: "left", marginRight: "10px"}} htmlFor={campo} className="form-label">
                         {getLabelForInput(campo)}
                     </label>
+                    <p style={{color: "red", margin: "0px", padding: "0px", float: "left", width: "20px"}}>*</p>
                     {campo === "cpf" ?
                         <InputMask
                             mask={"999.999.999-99"}
@@ -102,8 +110,8 @@ const RegistroHospede = ({ onSubmit }: Props) => {
                 </div>
             ))}
             <div className="d-grid">
-                <button type="submit" className="btn btn-success">
-                    Cadastrar
+                <button type="submit" className="btn btn-success" disabled={loading}>
+                    {loading ? <><span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span></> : ("Cadastrar")}
                 </button>
             </div>
         </form>

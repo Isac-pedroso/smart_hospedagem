@@ -103,7 +103,7 @@ function Cadastro() {
         )}
         <div className="text-center mt-3">
           <p>
-            Já tem conta? <a href="#">Fazer Login</a>
+            Já tem conta? <a style={{color: "blue" , cursor: "pointer"}} onClick={() => navigate("/login")}>Fazer Login</a>
           </p>
         </div>
       </div>

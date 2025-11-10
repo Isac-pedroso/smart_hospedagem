@@ -94,7 +94,7 @@ async function validaCpf(cpf: string | null) {
 async function validCamposHospede(hospede: Record<string, any>) {
     for(const [chave, valor] of Object.entries(hospede)){
         if(valor === "" || valor === null || valor === "undefined"){
-            return {success: false, message: `Campo ${chave} invalido ou vazio!`};
+            return {success: false, message: `Campo ${chave == "dt_nascimento" ? "data de nascimento" : chave } invalido ou vazio!`};
         }
     }
 
