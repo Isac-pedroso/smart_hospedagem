@@ -31,7 +31,12 @@ function Cadastro() {
         cpf: dados.cpf,
         dt_nascimento: dados.dt_nascimento
       } : null,
-      pousadaRequestDto: null
+      pousadaRequestDto: escolhaCadastro === 2 ? {
+        cnpj: dados.cnpj,
+        nome_fantasia: dados.nome_fantasia,
+        razao_social: dados.razao_social,
+        nome_responsavel: dados.nome_responsavel
+      }: null
     };
 
     const responseCadastro = await cadastraUsuario(payload);
@@ -99,7 +104,7 @@ function Cadastro() {
 
         {/* --- Formulário de Pousada --- */}
         {escolhaCadastro === 2 && (
-          <RegistroPousada />
+          <RegistroPousada onSubmit={handleCadastroSubmit}/>
         )}
         <div className="text-center mt-3">
           <p>

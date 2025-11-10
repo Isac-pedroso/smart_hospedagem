@@ -32,6 +32,7 @@ export async function cadastraUsuario(data: UserPrincipalCadastroRequest): Promi
 
         const usuarioPrincipal = data.usuarioPrincipalRequestDto;
         const usuarioHospede = data.usuarioRequestDto;
+        const usuarioPousada = data.pousadaRequestDto;
 
         const validCamposPrincipais = await validCamposUsuarioPrincipal(usuarioPrincipal);
 
@@ -49,16 +50,34 @@ export async function cadastraUsuario(data: UserPrincipalCadastroRequest): Promi
         if (usuarioHospede) {
 
             // Valida campos HOSPEDE
-            const validCampos = await validCamposHospede(usuarioHospede);
+            const validarCampos = await validCampos(usuarioHospede);
 
-            if (!validCampos.success) {
-                throw new Error(validCampos.message);
+            if (!validarCampos.success) {
+                throw new Error(validarCampos.message);
             }
             // Valida o cpf
             const validCpf = await validaCpf(usuarioHospede.cpf);
 
             if (!validCpf.success) {
                 throw new Error(validCpf.message);
+            }
+        }
+
+        // Valida se é POUSADAs
+        if(usuarioPousada){
+            // Valida campos POUSADA
+            const validarCampos = await validCampos(usuarioPousada);
+            
+            if (!validarCampos.success) {
+                throw new Error(validarCampos.message);
+            }
+
+            // Valida o cnpj
+            const validCnpj = await valiaCnpj(usuarioPousada.cnpj);
+
+
+            if(!validCnpj.success){
+                throw new Error(validCnpj.message);
             }
         }
 
@@ -91,10 +110,36 @@ async function validaCpf(cpf: string | null) {
     return { success: true, message: "CPF valido!" };
 }
 
-async function validCamposHospede(hospede: Record<string, any>) {
-    for(const [chave, valor] of Object.entries(hospede)){
+
+async function valiaCnpj(cnpj: string | null){
+    if(!cnpj){
+        return {success: false, message: "CNPJ não informado"};
+    }
+
+    const cnpjTratado = cnpj.replace(/[^\d]/g, "");
+
+    const valid = ValidBR.cnpj.isValid(cnpjTratado);
+
+    if(!valid){
+        return {success: false, message: "CNPJ invalido!"};
+    }
+
+    return { success: true, message: "CNPJ valido!"};
+}
+
+
+async function validCampos(usuario: Record<string, any>) {
+    for(const [chave, valor] of Object.entries(usuario)){
         if(valor === "" || valor === null || valor === "undefined"){
-            return {success: false, message: `Campo ${chave == "dt_nascimento" ? "data de nascimento" : chave } invalido ou vazio!`};
+
+            var chaveRetorno = chave;
+
+            if(chave === "dt_nascimento") chaveRetorno = "data de nascimento";
+            if(chave === "nome_fantasia") chaveRetorno = "nome fantasia";
+            if(chave === "razao_social") chaveRetorno = "razão social";
+            if(chave === "nome_responsavel") chaveRetorno = "rome responsavels";
+
+            return {success: false, message: `Campo ${chaveRetorno} invalido ou vazio!`};
         }
     }
 
