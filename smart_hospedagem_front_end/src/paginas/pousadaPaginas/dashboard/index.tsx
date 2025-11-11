@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useModal } from "../../../componentes/modal/ModalContext";
+import { AlertModal } from "../../../componentes/modal/modals/modalsPadrao/AlertModal";
 
 
 const Dashboard: React.FC = () => {
@@ -8,6 +12,27 @@ const Dashboard: React.FC = () => {
         hospedesConfirmados: 20,
         hospedesPendentes: 5
     };
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { showModal } = useModal();
+
+    const { user, token, isAuthenticated } = useSelector((state: any) => state.auth);
+
+
+    useEffect(() => {
+        validaCadastroConcluido()
+    }, []);
+
+    const validaCadastroConcluido = () => {
+        if (!user.cadastro_concluido) {
+            showModal(AlertModal, {
+                titulo: "Mensagem cadastro",
+                mensagem: "Conclua seu cadastro para sua pousada ficar visual aos hospedes!",
+                onConfirm: () => navigate("/perfil_pousada")
+            })
+        }
+    }
 
     return (
         <div className="container-fluid">

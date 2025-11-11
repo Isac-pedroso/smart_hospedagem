@@ -63,10 +63,10 @@ const HeaderPousada: React.FC<HeaderPousadaProsps> = () => {
 
                     <ul className="nav nav-pills flex-column mb-auto">
                         <li className="nav-item">
-                            <a href="#" className="nav-link active text-white">
+                            <Link to="/" className="nav-link active text-white">
                                 <i className="bi bi-speedometer2 me-2"></i>
                                 Dashboard
-                            </a>
+                            </Link>
                         </li>
                         <li><a href="#" className="nav-link text-white"><i className="bi bi-building-check me-2"></i> Quartos e Tarifas</a></li>
                         <li><a href="#" className="nav-link text-white"><i className="bi bi-calendar-check me-2"></i> Reservas</a></li>

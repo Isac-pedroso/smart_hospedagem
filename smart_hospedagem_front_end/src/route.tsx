@@ -8,6 +8,7 @@ import ValidAutenticacao from './componentes/ValidAutenticacao/index.tsx';
 import LayoutSelector from './componentes/Layout/LayoutSelector/index.tsx';
 import { useSelector } from 'react-redux';
 import Dashboard from './paginas/pousadaPaginas/dashboard/index.tsx';
+import PerfilPousada from './paginas/pousadaPaginas/perfilPousada/index.tsx';
 
 
 function AppRoutes() {
@@ -18,6 +19,7 @@ function AppRoutes() {
                     <Route index element={<HomeRouteRedireciona />} />
                     <Route path='/login' element={<RecirecionaPorAutenticacao><Login /></ RecirecionaPorAutenticacao >} />
                     <Route path='/cadastro' element={<RecirecionaPorAutenticacao><Cadastro /></ RecirecionaPorAutenticacao >} />
+                    <Route path='/perfil_pousada' element={<PerfilPousada />} />
                     {/* <Route path='/galeria' element={<ValidAutenticacao><Galeria /></ValidAutenticacao>} /> */}
                 </Route>
             </Routes>

@@ -17,3 +17,4 @@ export interface UserPrincipalCadastroRequest{
     usuarioRequestDto: UsuarioResponse | null,
     pousadaRequestDto: PousadaResponse | null
 }
+
