@@ -23,6 +23,15 @@ public class Pousada {
     private String razao_social;
     private String nome_responsavel;
 
+    @Column(nullable = true, columnDefinition = "TEXT")
+    private String breve_descricao;
+    @Column(nullable = true, columnDefinition = "TEXT")
+    private String descricao;
+
+    @Column(nullable = false)
+    private boolean cadastro_concluido;
+
+
     public Pousada(){
 
     }
@@ -33,6 +42,9 @@ public class Pousada {
         this.setNome_responsavel(requestDto.nome_responsavel());
         this.setRazao_social(requestDto.razao_social());
         this.setCnpj(requestDto.cnpj());
+        this.setBreve_descricao(requestDto.breve_descricao());
+        this.setDescricao(requestDto.descricao());
+        this.setCadastro_concluido(requestDto.cadastro_concluido());
     }
 
     public String getCnpj() {
@@ -47,8 +59,32 @@ public class Pousada {
         return id;
     }
 
+    public boolean isCadastro_concluido() {
+        return cadastro_concluido;
+    }
+
+    public void setCadastro_concluido(boolean cadastro_concluido) {
+        this.cadastro_concluido = cadastro_concluido;
+    }
+
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getBreve_descricao() {
+        return breve_descricao;
+    }
+
+    public void setBreve_descricao(String breve_descricao) {
+        this.breve_descricao = breve_descricao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public UsuarioPrincipal getUsuarioPrincipal() {
