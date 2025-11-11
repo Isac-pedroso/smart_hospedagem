@@ -13,7 +13,13 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public Usuario cadastrar(UsuarioRequestDto usuarioRequestDto){
+    public Usuario cadastrar(UsuarioRequestDto usuarioRequestDto) throws Exception{
+
+        var response = usuarioRepository.findByCpf(usuarioRequestDto.cpf());
+
+        if(response.isPresent()){
+            throw new Exception("CPF já existente!");
+        }
 
         Usuario persist = new Usuario(usuarioRequestDto);
 

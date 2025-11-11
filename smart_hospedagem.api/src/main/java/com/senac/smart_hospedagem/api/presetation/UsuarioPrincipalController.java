@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/usuarioPrincipal")
 public class UsuarioPrincipalController {
@@ -17,16 +19,17 @@ public class UsuarioPrincipalController {
     private UsuarioPrincipalService usuarioPrincipalService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<UsuarioPrincipalResponseDto> cadastrar(@RequestBody UsuarioPrincipalCadastroDto usuarioPrincipalCadastroDto){
+    public ResponseEntity<?> cadastrar(@RequestBody UsuarioPrincipalCadastroDto usuarioPrincipalCadastroDto){
         try{
             var usuarioResponse = usuarioPrincipalService.cadastrar(usuarioPrincipalCadastroDto.usuarioPrincipalRequestDto(),
                     usuarioPrincipalCadastroDto.usuarioRequestDto(),
                     usuarioPrincipalCadastroDto.pousadaRequestDto());
 
-            return ResponseEntity.ok(usuarioResponse);
+            return ResponseEntity.ok(Map.of("success", true, "message", "Cadastro realizado com sucesso!", "data", usuarioResponse));
 
         }catch(Exception e){
-            return ResponseEntity.badRequest().build();
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
         }
     }
 

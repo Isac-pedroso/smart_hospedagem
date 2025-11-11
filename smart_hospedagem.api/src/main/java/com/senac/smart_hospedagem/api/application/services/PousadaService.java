@@ -15,8 +15,12 @@ public class PousadaService {
 
 
 
-    public Pousada cadastrar(PousadaRequestDto pousadaRequestDto){
+    public Pousada cadastrar(PousadaRequestDto pousadaRequestDto) throws Exception{
+        var response = pousadaRepository.findByCnpj(pousadaRequestDto.cnpj());
 
+        if(response.isPresent()){
+            throw new Exception("CNPJ já existente!");
+        }
         Pousada persist = new Pousada(pousadaRequestDto);
 
         pousadaRepository.save(persist);
