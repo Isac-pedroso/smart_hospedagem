@@ -28,6 +28,7 @@ public class UsuarioPrincipal implements UserDetails {
         this.setRole(usuarioRequest.role());
         this.setUsuario(usuarioRequest.usuario());
         this.setPousada(usuarioRequest.pousada());
+        this.setCadastro_concluido(usuarioRequest.cadastro_concluido());
 
         if(this.getDt_cadastro() == null){
             this.setDt_cadastro(LocalDateTime.now());
@@ -52,6 +53,8 @@ public class UsuarioPrincipal implements UserDetails {
     @JoinColumn(name = "pousada_id")
     private Pousada pousada;
 
+    @Column(nullable = false)
+    private boolean cadastro_concluido;
 
 
 
@@ -68,6 +71,13 @@ public class UsuarioPrincipal implements UserDetails {
         }
     }
 
+    public boolean isCadastro_concluido() {
+        return cadastro_concluido;
+    }
+
+    public void setCadastro_concluido(boolean cadastro_concluido) {
+        this.cadastro_concluido = cadastro_concluido;
+    }
 
     @Override
     public String getPassword() {

@@ -25,7 +25,6 @@ public class PousadaService {
             throw new Exception("CNPJ já existente!");
         }
         Pousada persist = new Pousada(pousadaRequestDto);
-        persist.setCadastro_concluido(false);
         pousadaRepository.save(persist);
 
         return persist;

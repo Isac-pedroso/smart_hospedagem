@@ -64,6 +64,8 @@ public class UsuarioPrincipalService {
             default:
                 throw  new Exception("Nenhum tipo de cadastro selecionado!");
         }
+        usuarioPrincipal.setCadastro_concluido(false);
+
         usuarioPrincipalRepository.save(usuarioPrincipal);
 
         return new UsuarioPrincipalResponseDto(usuarioPrincipal);
@@ -81,8 +83,9 @@ public class UsuarioPrincipalService {
         String email = response.get().getEmail();
         String nome = response.get().getUsuario() != null ? response.get().getUsuario().getNome() : response.get().getPousada().getNome_fantasia();
         String role = response.get().getRole();
+        boolean cadastro_concluido = response.get().isCadastro_concluido();
 
-        return new UsuarioPrincipalSimplificadoResponseDto(email, nome, role);
+        return new UsuarioPrincipalSimplificadoResponseDto(email, nome, role, cadastro_concluido);
     }
 
 }

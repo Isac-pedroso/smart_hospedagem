@@ -6,7 +6,7 @@ import com.senac.smart_hospedagem.api.domain.entity.Pousada;
 import com.senac.smart_hospedagem.api.domain.entity.Usuario;
 import com.senac.smart_hospedagem.api.domain.entity.UsuarioPrincipal;
 
-public record UsuarioPrincipalResponseDto(Long id, String email, String senha, UsuarioResponseDto usuario, PousadaResponseDto pousada, String role) {
+public record UsuarioPrincipalResponseDto(Long id, String email, String senha, UsuarioResponseDto usuario, PousadaResponseDto pousada, String role, boolean cadastro_concluido) {
     public UsuarioPrincipalResponseDto(UsuarioPrincipal usuarioPrincipal){
         this(
                 usuarioPrincipal.getId(),
@@ -14,7 +14,8 @@ public record UsuarioPrincipalResponseDto(Long id, String email, String senha, U
                 usuarioPrincipal.getSenha(),
                 usuarioPrincipal.getUsuario() != null ? new UsuarioResponseDto(usuarioPrincipal.getUsuario()) : null,
                 usuarioPrincipal.getPousada() != null ? new PousadaResponseDto(usuarioPrincipal.getPousada()) : null,
-                usuarioPrincipal.getRole()
+                usuarioPrincipal.getRole(),
+                usuarioPrincipal.isCadastro_concluido()
         );
     }
 }

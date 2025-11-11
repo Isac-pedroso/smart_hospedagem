@@ -28,9 +28,6 @@ public class Pousada {
     @Column(nullable = true, columnDefinition = "TEXT")
     private String descricao;
 
-    @Column(nullable = false)
-    private boolean cadastro_concluido;
-
 
     public Pousada(){
 
@@ -44,7 +41,6 @@ public class Pousada {
         this.setCnpj(requestDto.cnpj());
         this.setBreve_descricao(requestDto.breve_descricao());
         this.setDescricao(requestDto.descricao());
-        this.setCadastro_concluido(requestDto.cadastro_concluido());
     }
 
     public String getCnpj() {
@@ -57,14 +53,6 @@ public class Pousada {
 
     public Long getId() {
         return id;
-    }
-
-    public boolean isCadastro_concluido() {
-        return cadastro_concluido;
-    }
-
-    public void setCadastro_concluido(boolean cadastro_concluido) {
-        this.cadastro_concluido = cadastro_concluido;
     }
 
     public void setId(Long id) {
