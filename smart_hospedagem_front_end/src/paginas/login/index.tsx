@@ -35,11 +35,11 @@ const Login = () => {
 
         const dadosUsuarioPrincipal = await getDadosUsuarioPrincipal(loginResponse.token);
         
-        if(dadosUsuarioPrincipal.email === "" && dadosUsuarioPrincipal.nome === "" && dadosUsuarioPrincipal.role === ""){
+        if(dadosUsuarioPrincipal.email === "" && dadosUsuarioPrincipal.nome === "" && dadosUsuarioPrincipal.role === "" && dadosUsuarioPrincipal.cadastro_concluido == null){
             alert("Problema ao efetuar login!");
             return;
         }
-        dispatch(loginSuccess({ user: { email: formData.email, nome: dadosUsuarioPrincipal.nome, role: dadosUsuarioPrincipal.role }, token: loginResponse.token }))
+        dispatch(loginSuccess({ user: { email: formData.email, nome: dadosUsuarioPrincipal.nome, role: dadosUsuarioPrincipal.role, cadastro_concluido: dadosUsuarioPrincipal.cadastro_concluido }, token: loginResponse.token }))
         navigate("/");
     };
 

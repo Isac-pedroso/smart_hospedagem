@@ -4,6 +4,7 @@ interface User {
     email: String;
     nome: String;
     role: String;
+    cadastro_concluido: boolean | null
 }
 
 

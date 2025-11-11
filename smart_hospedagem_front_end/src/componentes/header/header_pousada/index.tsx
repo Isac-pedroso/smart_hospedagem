@@ -12,6 +12,9 @@ import { logout } from "../../../store/authSlice";
 import { store } from "../../../store/store";
 import { useEffect } from "react";
 
+import { useModal } from "../../modal/ModalContext";
+import { AlertModal } from "../../modal/modals/modalsPadrao/AlertModal";
+
 interface HeaderPousadaProsps {
     children?: React.ReactNode;
 }
@@ -19,8 +22,25 @@ interface HeaderPousadaProsps {
 const HeaderPousada: React.FC<HeaderPousadaProsps> = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const {showModal} = useModal();
 
     const { user, token, isAuthenticated } = useSelector((state: any) => state.auth);
+
+
+    useEffect(()=>{
+        validaCadastroConcluido()
+    }, []);
+
+    const validaCadastroConcluido = () => {
+        if(!user.cadastro_concluido){
+            showModal(AlertModal, {
+                titulo: "Mensagem cadastro",
+                mensagem: "Conclua seu cadastro para sua pousada ficar visual aos hospedes!",
+                onConfirm: () => navigate("/perfil_pousada")
+            })
+        }
+    }
+
 
     const handleDeslogar = () => {
         dispatch(logout());
@@ -83,7 +103,7 @@ const HeaderPousada: React.FC<HeaderPousadaProsps> = () => {
                             className="dropdown-menu dropdown-menu-dark text-small shadow"
                             aria-labelledby="dropdownUser1"
                         >
-                            <li><a className="dropdown-item" href="#">Perfil</a></li>
+                            <li><Link className="dropdown-item" to="/perfil_pousada" >Perfil</Link></li>
                             <li><a className="dropdown-item" href="#">Configurações</a></li>
                             <li><hr className="dropdown-divider" /></li>
                             <li><a className="dropdown-item" href="#" onClick={handleDeslogar}>Sair</a></li>

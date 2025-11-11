@@ -4,7 +4,8 @@ import type { UsuarioResponse } from "./usuario"
 export interface UserPrincipalResponse{
     email: string,
     nome: string,
-    role: string
+    role: string,
+    cadastro_concluido: boolean | null
 }
 
 export interface UserPrincipalRequest{

@@ -23,7 +23,7 @@ export async function getDadosUsuarioPrincipal(token: string): Promise<UserPrinc
 
         return response.data;
     } catch (error) {
-        return { email: "", nome: "", role: "" };
+        return { email: "", nome: "", role: "", cadastro_concluido: null };
     }
 }
 
