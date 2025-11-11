@@ -9,6 +9,7 @@ interface Props {
 interface FormData {
     cnpj: string,
     nome_fantasia: string,
+    email: string,
     razao_social: string,
     nome_responsavel: string,
     senha: string,
@@ -20,6 +21,7 @@ const RegistroPousada = ({ onSubmit }: Props) => {
     const [form, setForm] = useState<FormData>({
         cnpj: "",
         nome_fantasia: "",
+        email: "",
         razao_social: "",
         nome_responsavel: "",
         senha: "",
@@ -54,11 +56,12 @@ const RegistroPousada = ({ onSubmit }: Props) => {
         if (campo == "nome_responsavel") return { type: "text", label: "Nome responsavel" };
         if (campo == "senha") return { type: "password", label: "Senha" };
         if (campo == "confirmarSenha") return { type: "password", label: "Confirmar senha" };
+        if (campo == "email") return { type: "text", label: "Email" };
 
         return { type: campo, label: campo };
     }
 
-    const campos: (keyof FormData)[] = ["cnpj", "nome_fantasia", "razao_social", "nome_responsavel", "senha", "confirmarSenha"];
+    const campos: (keyof FormData)[] = ["cnpj", "nome_fantasia", "razao_social", "email", "nome_responsavel", "senha", "confirmarSenha"];
 
     return (
         <>
