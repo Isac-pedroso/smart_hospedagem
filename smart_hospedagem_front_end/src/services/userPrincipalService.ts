@@ -82,9 +82,7 @@ export async function cadastraUsuario(data: UserPrincipalCadastroRequest): Promi
         }
 
         const response = await axios.post("http://localhost:8080/usuarioPrincipal/cadastrar", data)
-        console.log(response.status)
-        console.log("AQUI")
-        console.log(response.data.message)
+        
         if (response.status !== 200) {
             throw new Error("Ocorreu um problema ao cadastrar!");
         }

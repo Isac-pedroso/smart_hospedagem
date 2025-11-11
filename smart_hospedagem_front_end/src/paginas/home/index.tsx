@@ -1,42 +1,50 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../css/home.css'
 import { useEffect, useState } from 'react';
-// import type { Galeria } from '../../models/Galeria';
-// import GaleriaService from '../../services/GaleriaService';
-// import AxiosConfiguracao from '../../api/axiosConfig';
+import { useModal } from '../../componentes/modal/ModalContext';
+import { useNavigate } from 'react-router-dom';
+import { AlertModal } from '../../componentes/modal/modals/modalsPadrao/AlertModal';
+import { listarPousadas } from '../../services/pousadaService';
+
 
 
 function Home() {
-  // const api = new AxiosConfiguracao("http://localhost:8080");
-  // const galeriaService = new GaleriaService(api);
+  interface Pousada{
+    id: number | null,
+    cnpj: string | null,
+    nome_fantasia: string,
+    razao_social: string | null,
+    nome_responsavel: string | null
+  }
 
-  // const [fotos, setFotos] = useState<Galeria[]>([])
-  const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [pousadas, setPousadas] = useState<Pousada[]>([]);
+  const { showModal } = useModal();
+  const { hideModal } = useModal();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    handleListarFotos();
+    handleListarPousadas();
   }, []);
 
-  const handleListarFotos = async () => {
-    try {
-      // const data = await galeriaService.listar();
-      // console.log(data);
-      // setFotos(data);
-    } catch (error) {
-      console.error(error);
-      setError("Problema ao trazer as images!");
-    } finally {
-      setLoading(false);
+  const handleListarPousadas = async () => {
+
+    const response = await listarPousadas();
+
+    if (!response.success) {
+      showModal(AlertModal, {
+          titulo: "Mensagem cadastro",
+          mensagem: response.message,
+          onConfirm: hideModal
+        }
+      )
     }
+
+    setPousadas(response.data);
   }
+
   return (
-
-
     <>
-     
-
       {/* HERO */}
       <section className="hero d-flex align-items-center">
         <div className="hero-content text-center">
@@ -58,6 +66,25 @@ function Home() {
         </div>
 
         <div className="row g-4">
+
+          {pousadas.map((pousada) => (
+            <div className="col-md-4" key={pousada.id}>
+              <div className="card">
+                <img
+                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+                  className="card-img-top"
+                  alt={pousada.nome_fantasia}
+                />
+                <div className="card-body">
+                  <h5 className="card-title text-success">{pousada.nome_fantasia}</h5>
+                  <p className="card-text">
+                    Entre montanhas e trilhas, perfeita para relaxar e recarregar as energias.
+                  </p>
+                  <button className="btn btn-vermais" onClick={() => navigate(`/detalhesPousada/${pousada.id}`)}>Reservar</button>
+                </div>
+              </div>
+            </div>
+          ))}
           {/* Card 1 */}
           <div className="col-md-4">
             <div className="card">

@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom';
-import Header from "../header";
-import Footer from "../footer";
+import Header from "../../header";
+import Footer from "../../footer";
 
 
-function LayoutAdmin() {
+function LayoutPadrao() {
     return (
         <>
 
@@ -17,4 +17,4 @@ function LayoutAdmin() {
     );
 }
 
-export default LayoutAdmin;
+export default LayoutPadrao;
