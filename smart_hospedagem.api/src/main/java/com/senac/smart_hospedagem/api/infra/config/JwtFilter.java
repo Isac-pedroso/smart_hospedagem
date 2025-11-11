@@ -29,7 +29,8 @@ public class JwtFilter extends OncePerRequestFilter {
             || path.startsWith("/v3/api-docs")
                 || path.startsWith("/webjars")
                 || path.startsWith("/swagger-ui")
-                || path.startsWith("/usuarioPrincipal/cadastrar")) {
+                || path.startsWith("/usuarioPrincipal/cadastrar")
+                || path.startsWith("/pousada/listarPousadas")) {
 
             filterChain.doFilter(request, response);
             return;
