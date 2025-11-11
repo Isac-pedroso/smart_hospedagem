@@ -33,11 +33,12 @@ function Home() {
 
     if (!response.success) {
       showModal(AlertModal, {
-          titulo: "Mensagem cadastro",
+          titulo: "Mensagem sistema",
           mensagem: response.message,
           onConfirm: hideModal
         }
       )
+      return false;
     }
 
     setPousadas(response.data);
