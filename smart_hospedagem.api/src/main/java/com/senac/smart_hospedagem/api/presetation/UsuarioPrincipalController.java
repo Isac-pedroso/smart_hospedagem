@@ -3,6 +3,7 @@ package com.senac.smart_hospedagem.api.presetation;
 import com.senac.smart_hospedagem.api.application.dto.usuarioPrincipal.*;
 import com.senac.smart_hospedagem.api.application.services.UsuarioPrincipalService;
 import com.senac.smart_hospedagem.api.domain.entity.UsuarioPrincipal;
+import org.apache.coyote.Response;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,17 @@ public class UsuarioPrincipalController {
         }catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/getDadosFullUsuario")
+    public ResponseEntity<?> getDadosFullUsuario(){
+        try{
+            var dadosUsuarioResponse = usuarioPrincipalService.getDadosFullUsuario();
+
+            return ResponseEntity.ok(Map.of("success", true, "message", "Dados retornados com sucesso!", "data",dadosUsuarioResponse));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
         }
     }
 

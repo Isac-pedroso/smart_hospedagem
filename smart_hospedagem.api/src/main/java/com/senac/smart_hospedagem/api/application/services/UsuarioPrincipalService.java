@@ -5,10 +5,7 @@ import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaRequestDto;
 import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaResponseDto;
 import com.senac.smart_hospedagem.api.application.dto.usuario.UsuarioRequestDto;
 import com.senac.smart_hospedagem.api.application.dto.usuario.UsuarioResponseDto;
-import com.senac.smart_hospedagem.api.application.dto.usuarioPrincipal.UsuarioPrincipalDto;
-import com.senac.smart_hospedagem.api.application.dto.usuarioPrincipal.UsuarioPrincipalRequestDto;
-import com.senac.smart_hospedagem.api.application.dto.usuarioPrincipal.UsuarioPrincipalResponseDto;
-import com.senac.smart_hospedagem.api.application.dto.usuarioPrincipal.UsuarioPrincipalSimplificadoResponseDto;
+import com.senac.smart_hospedagem.api.application.dto.usuarioPrincipal.*;
 import com.senac.smart_hospedagem.api.domain.entity.Pousada;
 import com.senac.smart_hospedagem.api.domain.entity.Usuario;
 import com.senac.smart_hospedagem.api.domain.entity.UsuarioPrincipal;
@@ -87,5 +84,13 @@ public class UsuarioPrincipalService {
 
         return new UsuarioPrincipalSimplificadoResponseDto(email, nome, role, cadastro_concluido);
     }
+
+
+    /*public UsuarioPrincipalFullResponseDto getDadosFullUsuario(){
+
+        //var response =
+
+        return new UsuarioPrincipalFullResponseDto()
+    }*/
 
 }
