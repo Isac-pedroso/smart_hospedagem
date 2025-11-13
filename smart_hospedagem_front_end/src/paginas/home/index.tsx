@@ -50,7 +50,7 @@ function Home() {
       <section className="hero d-flex align-items-center">
         <div className="hero-content text-center">
           <h1>Conecte-se à Natureza</h1>
-          <p>Descubra as pousadas mais encantadoras do Brasil 🌺</p>
+          <p style={{color: "white"}}>Descubra as pousadas mais encantadoras do Brasil 🌺</p>
           <a href="#pousadas" className="btn btn-vermais">
             Ver Pousadas
           </a>

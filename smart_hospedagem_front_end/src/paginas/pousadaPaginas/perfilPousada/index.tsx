@@ -5,17 +5,26 @@ import "../../css/carregamento-principal.css";
 import { getDadosFullUsuario } from "../../../services/userPrincipalService";
 import { useModal } from "../../../componentes/modal/ModalContext";
 import { AlertModal } from "../../../componentes/modal/modals/modalsPadrao/AlertModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../store/authSlice";
+import { atualizarDadosUsuario } from "../../../services/userPrincipalService";
 
 
 const PerfilPousada: React.FC = () => {
     // Estado para controlar a edição
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);
+    
     const { showModal } = useModal();
     const { hideModal } = useModal();
+    
     const token = useSelector((state: any) => state.auth.token);
+
+    const dispatch = useDispatch();
+
     useEffect(() => {
+        hideModal()
+        console.log("USEEFFECT Executado")
         handlerGetDadosPousada();
     }, [token]);
 
@@ -32,42 +41,76 @@ const PerfilPousada: React.FC = () => {
     // Dados do perfil (para exemplo, você pode substituir com dados reais ou usar um hook como useState)
     const [userData, setUserData] = useState<PousadaData>({
         foto: "",
+        cnpj: "",
         nome_responsavel: "",
         breve_descricao: "",
-        cnpj: "",
         nome_fantasia: "",
         razao_social: "",
         descricao: ""
     });
 
-
-    const handlerGetDadosPousada = async () => {
+    const handlerGetDadosPousada = async () => { 
         try {
+            if(!token) throw new Error("Problema com login, por favor entre novamente no sistema !");
+            
             const response = await getDadosFullUsuario(token);
+            console.log(response)
+            if (!response.success) throw new Error(response.message);
             
-            if (!response.success) {
-                throw new Error(response.message);
-            }
+            setUserData(response.data);
 
-            
+            console.log(userData)
         } catch (error: any) {
 
-            if(error.response){
+            if(error.response?.status === 401){
                 showModal(AlertModal, {
-                    titulo: "Mensagem sistema",
-                    mensagem: error.response.message,
-                    onConfirm: () => hideModal
+                    titulo: "Sessão expirada",
+                    mensagem: "Sua sessão expirou. Faça login novamente",
+                    onConfirm: () => {
+                        hideModal;
+                        dispatch(logout());
+                    }
                 })
             }else{
                 showModal(AlertModal, {
                     titulo: "Mensagem sistema",
-                    mensagem: error.message | error,
-                    onConfirm: () => hideModal
+                    mensagem: error.message || "Problema ao carrega dados!",
+                    onConfirm: () => hideModal()
                 })
             }
         } finally {
             setLoading(false);
         }
+    }
+
+    const handlerAtualizarDados = async () => {
+        setLoading(true);
+        setTimeout(async ()=>{
+            try{
+
+                const response = await atualizarDadosUsuario(null, userData, token);
+                console.log(response)
+                if(!response?.success){
+                    throw new Error(response?.message);
+                }
+
+                showModal(AlertModal, {
+                    titulo: "Mensagem sistema",
+                    mensagem: "Dados atualizados com sucesso!",
+                    onConfirm: () => hideModal()
+                })
+
+            }catch(error: any){
+                showModal(AlertModal, {
+                    titulo: "Mensagem sistema",
+                    mensagem: error.message || "Problema ao salvar dados!",
+                    onConfirm: () => hideModal()
+                })
+            }finally{
+                setIsEditing(false);
+                setLoading(false);
+            }
+        }, 333)
     }
 
     // Função para alternar entre visualização e edição
@@ -127,7 +170,7 @@ const PerfilPousada: React.FC = () => {
                                                 onChange={handleInputChange}
                                             />
                                         ) : (
-                                            <p>{userData.cnpj}</p>
+                                            <p>{userData.cnpj ? userData.cnpj : "Não informado"}</p>
                                         )}
                                     </div>
                                     <div className="col-md-6">
@@ -136,12 +179,12 @@ const PerfilPousada: React.FC = () => {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                name="nomeFantasia"
+                                                name="nome_fantasia"
                                                 value={userData.nome_fantasia}
                                                 onChange={handleInputChange}
                                             />
                                         ) : (
-                                            <p>{userData.nome_fantasia}</p>
+                                            <p>{userData.nome_fantasia ? userData.nome_fantasia : "Não informado"}</p>
                                         )}
                                     </div>
                                 </div>
@@ -153,12 +196,12 @@ const PerfilPousada: React.FC = () => {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                name="razaoSocial"
+                                                name="razao_social"
                                                 value={userData.razao_social}
                                                 onChange={handleInputChange}
                                             />
                                         ) : (
-                                            <p>{userData.razao_social}</p>
+                                            <p>{userData.razao_social ? userData.razao_social : "Não informado"}</p>
                                         )}
                                     </div>
                                     <div className="col-md-6">
@@ -167,16 +210,31 @@ const PerfilPousada: React.FC = () => {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                name="nomeResponsavel"
+                                                name="nome_responsavel"
                                                 value={userData.nome_responsavel}
                                                 onChange={handleInputChange}
                                             />
                                         ) : (
-                                            <p>{userData.nome_responsavel}</p>
+                                            <p>{userData.nome_responsavel ? userData.nome_responsavel : "Não informado"}</p>
                                         )}
                                     </div>
                                 </div>
-
+                                <div className="row">
+                                    <div className="col-12">
+                                        <h6>Breve descrição:</h6>
+                                        {isEditing ? (
+                                            <textarea
+                                                className="form-control"
+                                                name="breve_descricao"
+                                                value={userData.breve_descricao}
+                                                onChange={handleInputChange}
+                                                rows={5}
+                                            />
+                                        ) : (
+                                            <p>{userData.breve_descricao ? userData.breve_descricao : "Não informado"}</p>
+                                        )}
+                                    </div>
+                                </div>
                                 <div className="row">
                                     <div className="col-12">
                                         <h6>Descrição:</h6>
@@ -189,13 +247,13 @@ const PerfilPousada: React.FC = () => {
                                                 rows={5}
                                             />
                                         ) : (
-                                            <p>{userData.descricao}</p>
+                                            <p>{userData.descricao ? userData.descricao : "Não informado"}</p>
                                         )}
                                     </div>
                                 </div>
 
                                 {isEditing && (
-                                    <button className="btn btn-success mt-3" onClick={() => alert("Dados atualizados!")}>
+                                    <button className="btn btn-success mt-3" onClick={ handlerAtualizarDados}>
                                         Salvar
                                     </button>
                                 )}

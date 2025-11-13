@@ -1,4 +1,4 @@
-import type { PousadaResponse } from "./pousada"
+import type { PousadaRequest, PousadaResponse } from "./pousada"
 import type { UsuarioResponse } from "./usuario"
 
 export interface UserPrincipalResponse{
@@ -18,3 +18,8 @@ export interface UserPrincipalCadastroRequest{
     pousadaRequestDto: PousadaResponse | null
 }
 
+
+export interface AtualizarDadosRequestDto{
+    usuarioRequest: UsuarioResponse | null,
+    pousadaRequest: PousadaRequest | null
+}

@@ -28,7 +28,7 @@ const Dashboard: React.FC = () => {
         if (!user.cadastro_concluido) {
             showModal(AlertModal, {
                 titulo: "Mensagem cadastro",
-                mensagem: "Conclua seu cadastro para sua pousada ficar visual aos hospedes!",
+                mensagem: "Conclua seu cadastro para sua pousada ficar visivel aos hospedes!",
                 onConfirm: () => navigate("/perfil_pousada")
             })
         }

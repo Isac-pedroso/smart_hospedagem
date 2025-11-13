@@ -3,30 +3,39 @@ import type { UserPrincipalCadastroRequest, UserPrincipalResponse } from "../typ
 import { store } from "../store/store";
 import ValidBR from "validbr";
 import { useSelector } from "react-redux";
+import type { UsuarioResponse } from "../types/usuario"; 
+import type { PousadaResponse } from "../types/pousada";
+import type { AtualizarDadosRequestDto } from "../types/UserPrincipal";
 
-
-export async function getDadosFullUsuario(token: string){
-    try {   
-        console.log(token)
+export async function getDadosFullUsuario(token: string) {
+    try {
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }
 
-        const response = await axios.get("http://localhost:8080/usuarioPrincipal/getDadosFullUsuario");
+        const response = await axios.get("http://localhost:8080/usuarioPrincipal/getDadosFullUsuario", config);
         console.log(response)
-        if(!response.data.success){
+        if (!response.data.success) {
             throw new Error(response.data.message);
         }
 
-        return {success: true, message: response.data.message, data: response.data.data};
+        if (response.data.data.pousada) {
+            return { success: true, message: response.data.message, data: response.data.data.pousada };
+        }
+
+        if (response.data.data.usuario) {
+            return { success: true, message: response.data.message, data: response.data.data.usuario };
+        }
+
+        return { success: true, message: response.data.message, data: response.data.data };
 
     } catch (error: any) {
         if (error.response) {
-            return { success: false, message: error.response.data.message | error }
+            return { success: false, message: error.response?.data?.message || error }
         } else {
-            return { success: false, message: error.message | error }
+            return { success: false, message: error.message || error }
         }
     }
 }
@@ -216,4 +225,39 @@ async function validSenhas(usuarioPrincipal: Record<string, any> | null) {
     }
 
     return { success: true, message: "Senhas iguais!" };
+}
+
+export async function atualizarDadosUsuario(usuario: UsuarioResponse | null, pousada: PousadaResponse | null, token: string) {
+    try {
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        const data: AtualizarDadosRequestDto = {
+            usuarioRequest: usuario,
+            pousadaRequest: pousada
+        }
+
+        const response = await axios.put("http://localhost:8080/usuarioPrincipal/atualizarDados", data, config);
+
+        if(!response.data.success){
+            throw new Error(response.data.message);
+        }
+
+        return {
+            success: true,
+            message: response.data.message,
+            data: response.data.data || null
+        };
+
+    } catch (error: any) {
+        if (error.response) {
+            return { success: false, message: error.response?.message || error }
+        } else {
+            return { success: false, message: error.message }
+        }
+    }
 }
