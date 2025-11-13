@@ -12,6 +12,7 @@ import com.senac.smart_hospedagem.api.domain.entity.UsuarioPrincipal;
 import com.senac.smart_hospedagem.api.domain.repository.UsuarioPrincipalRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -86,11 +87,30 @@ public class UsuarioPrincipalService {
     }
 
 
-    /*public UsuarioPrincipalFullResponseDto getDadosFullUsuario(){
+    public UsuarioPrincipalFullResponseDto getDadosFullUsuario(UsuarioPrincipalDto usuarioLogado) throws Exception{
 
-        //var response =
+        Optional<UsuarioPrincipal> response = usuarioPrincipalRepository.findByIdUserCompleto(usuarioLogado.id());
 
-        return new UsuarioPrincipalFullResponseDto()
-    }*/
+        if(!response.isPresent()){
+            throw new Exception("Usuario não encontrado!");
+        }
 
+        return new UsuarioPrincipalFullResponseDto(response.get().getUsuario(), response.get().getPousada());
+    }
+
+    @Transactional
+    public boolean atualizarDados(UsuarioRequestDto usuarioRequest,PousadaRequestDto pousadaRequest, UsuarioPrincipalDto usuarioPrincipal) throws Exception{
+        // Aqui abordei o throw com orElseThrow
+        UsuarioPrincipal usuarioPersist = usuarioPrincipalRepository.findById(usuarioPrincipal.id()).orElseThrow(() -> new RuntimeException("Usuario não encontrado!"));
+
+        if(usuarioRequest != null){
+            usuarioService.atualizarDados(usuarioPersist,usuarioRequest);
+        }
+
+        if(pousadaRequest != null){
+            pousadaService.atualizarDados(usuarioPersist, pousadaRequest);
+        }
+
+        return true;
+    }
 }

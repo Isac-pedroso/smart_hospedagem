@@ -1,4 +1,7 @@
 package com.senac.smart_hospedagem.api.application.dto.usuarioPrincipal;
 
-public class AtualizarDadosRequestDto {
+import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaRequestDto;
+import com.senac.smart_hospedagem.api.application.dto.usuario.UsuarioRequestDto;
+
+public record AtualizarDadosRequestDto(UsuarioRequestDto usuarioRequest, PousadaRequestDto pousadaRequest) {
 }
