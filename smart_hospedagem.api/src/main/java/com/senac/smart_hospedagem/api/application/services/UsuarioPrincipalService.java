@@ -130,18 +130,22 @@ public class UsuarioPrincipalService {
 
         if(!pousadaService.validaDadosEstaoCompletoPerfilPousada(usuarioPersist.get().getPousada())){
             pousadaEtapasConfiguracaoService.editarEtapaParaFalse(usuarioPersist.get().getPousada(), "dados_perfil");
+        }else{
+            pousadaEtapasConfiguracaoService.editarEtapaParaTrue(usuarioPersist.get().getPousada(), "dados_perfil");
         }
 
         if(!pousadaService.validaQuartosExistentePousada(usuarioPersist.get().getPousada())){
             pousadaEtapasConfiguracaoService.editarEtapaParaFalse(usuarioPersist.get().getPousada(), "quartos");
+        }else{
+            pousadaEtapasConfiguracaoService.editarEtapaParaTrue(usuarioPersist.get().getPousada(), "quartos");
         }
 
         if(!pousadaService.validaFotosGaleriaExistentePousada(usuarioPersist.get().getPousada())){
             pousadaEtapasConfiguracaoService.editarEtapaParaFalse(usuarioPersist.get().getPousada(), "galeria");
+        }else{
+            pousadaEtapasConfiguracaoService.editarEtapaParaTrue(usuarioPersist.get().getPousada(), "galeria");
         }
 
-        List<PousadaEtapasConfiguracao> configuracaos = pousadaEtapasConfiguracaoService.trasEtapasConfiguracoes(usuarioPersist.get().getPousada());
-
-        return configuracaos;
+        return pousadaEtapasConfiguracaoService.trasEtapasConfiguracoes(usuarioPersist.get().getPousada());
     }
 }

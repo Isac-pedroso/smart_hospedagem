@@ -30,7 +30,7 @@ public class Pousada {
     @Column(nullable = true, columnDefinition = "TEXT")
     private String descricao;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String foto_perfil;
 
     @OneToMany(mappedBy = "pousada", cascade = CascadeType.ALL, orphanRemoval = true)

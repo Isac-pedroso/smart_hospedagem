@@ -1,6 +1,7 @@
 package com.senac.smart_hospedagem.api.application.services;
 
 import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaRequestDto;
+import com.senac.smart_hospedagem.api.application.dto.pousadaEtapasConfiguracao.PousadaEtapasConfiguracaoResponseDto;
 import com.senac.smart_hospedagem.api.domain.entity.Pousada;
 import com.senac.smart_hospedagem.api.domain.entity.PousadaEtapasConfiguracao;
 import com.senac.smart_hospedagem.api.domain.repository.PousadaEtapasConfiguracaoRepository;
@@ -34,23 +35,34 @@ public class PousadaEtapasConfiguracaoService {
         return configuracaos;
     }
 
-    public PousadaEtapasConfiguracao editarEtapaParaFalse(Pousada pousada, String etapa){
+    public PousadaEtapasConfiguracao editarEtapaParaFalse(Pousada pousada, String etapa) throws Exception{
 
-        Optional<PousadaEtapasConfiguracao> response = pousadaEtapasConfiguracaoRepository.findByIdAndEtapaContraing(pousada.getId(), etapa);
+        PousadaEtapasConfiguracao response = pousadaEtapasConfiguracaoRepository.findByPousadaIdAndEtapa(pousada.getId(), etapa).orElseThrow(() -> new RuntimeException("Nenhuma etapa econtrada!"));
 
-        PousadaEtapasConfiguracao configuracao = new PousadaEtapasConfiguracao();
+        response.setAtualizado_em(LocalDateTime.now());
+        response.setConcluido(false);
 
-        configuracao.setId(response.get().getId());
-        configuracao.setAtualizado_em(LocalDateTime.now());
-        configuracao.setConcluido(false);
-
-        return pousadaEtapasConfiguracaoRepository.save(configuracao);
+        return pousadaEtapasConfiguracaoRepository.save(response);
     }
 
 
-    public List<PousadaEtapasConfiguracao> trasEtapasConfiguracoes(Pousada pousada){
+    public PousadaEtapasConfiguracao editarEtapaParaTrue(Pousada pousada, String etapa) throws Exception{
+
+        PousadaEtapasConfiguracao response = pousadaEtapasConfiguracaoRepository.findByPousadaIdAndEtapa(pousada.getId(), etapa).orElseThrow(() -> new RuntimeException("Nenhuma etapa econtrada!"));
+
+        response.setAtualizado_em(LocalDateTime.now());
+        response.setConcluido(true);
+
+        return pousadaEtapasConfiguracaoRepository.save(response);
+    }
+
+
+    public List<PousadaEtapasConfiguracaoResponseDto> trasEtapasConfiguracoes(Pousada pousada){
         List<PousadaEtapasConfiguracao> response = pousadaEtapasConfiguracaoRepository.findByPousadaId(pousada.getId());
 
-        return response;
+        return response
+                .stream()
+                .map(configuracao -> new PousadaEtapasConfiguracaoResponseDto(configuracao))
+                .toList();
     }
 }

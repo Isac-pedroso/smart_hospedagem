@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface PousadaEtapasConfiguracaoRepository extends JpaRepository<PousadaEtapasConfiguracao, Long> {
 
-    Optional<PousadaEtapasConfiguracao> findByIdAndEtapaContraing(Long id, String etapa);
+    Optional<PousadaEtapasConfiguracao> findByPousadaIdAndEtapa(Long id, String etapa);
 
     List<PousadaEtapasConfiguracao> findByPousadaId(Long id);
 }

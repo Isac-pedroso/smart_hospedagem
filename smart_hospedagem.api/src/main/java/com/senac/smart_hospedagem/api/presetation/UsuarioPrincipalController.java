@@ -1,6 +1,7 @@
 package com.senac.smart_hospedagem.api.presetation;
 
 import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaRequestDto;
+import com.senac.smart_hospedagem.api.application.dto.pousadaEtapasConfiguracao.PousadaEtapasConfiguracaoResponseDto;
 import com.senac.smart_hospedagem.api.application.dto.usuario.UsuarioRequestDto;
 import com.senac.smart_hospedagem.api.application.dto.usuario.UsuarioResponseDto;
 import com.senac.smart_hospedagem.api.application.dto.usuarioPrincipal.*;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -68,6 +70,18 @@ public class UsuarioPrincipalController {
             return ResponseEntity.ok(Map.of("success", true, "message", "Dados atualizados com sucesso!"));
         }catch(Exception e){
             return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/validaEtapasConfiguracao")
+    public ResponseEntity<?> validaEtapasConfiguracao(@AuthenticationPrincipal UsuarioPrincipalDto usuarioPrincipal){
+        try{
+
+            List<PousadaEtapasConfiguracaoResponseDto> response = usuarioPrincipalService.validaEtapasConfiguracao(usuarioPrincipal);
+
+            return ResponseEntity.ok(Map.of("success", true, "message", "Validação concluida com sucesso!", "data", response));
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(Map.of("success",false, "message", e.getMessage()));
         }
     }
 
