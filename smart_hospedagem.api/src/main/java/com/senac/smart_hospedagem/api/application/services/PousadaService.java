@@ -4,8 +4,10 @@ import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaRequestDto;
 import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaResponseDto;
 import com.senac.smart_hospedagem.api.application.dto.pousada.PousadasResponseDto;
 import com.senac.smart_hospedagem.api.domain.entity.Pousada;
+import com.senac.smart_hospedagem.api.domain.entity.PousadaEtapasConfiguracao;
 import com.senac.smart_hospedagem.api.domain.entity.UsuarioPrincipal;
 import com.senac.smart_hospedagem.api.domain.repository.PousadaRepository;
+import com.senac.smart_hospedagem.api.domain.repository.QuartoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,14 @@ public class PousadaService {
     @Autowired
     private PousadaRepository pousadaRepository;
 
+    @Autowired
+    private PousadaEtapasConfiguracaoService pousadaEtapasConfiguracaoService;
+
+    @Autowired
+    private GaleriaService galeriaService;
+
+    @Autowired
+    private QuartoService quartoService;
 
 
     public Pousada cadastrar(PousadaRequestDto pousadaRequestDto) throws Exception{
@@ -27,6 +37,10 @@ public class PousadaService {
             throw new Exception("CNPJ já existente!");
         }
         Pousada persist = new Pousada(pousadaRequestDto);
+
+        List<PousadaEtapasConfiguracao> configuracaos = pousadaEtapasConfiguracaoService.gravarEtapas(persist);
+        persist.setEtapas_configuracoes(configuracaos);
+
         pousadaRepository.save(persist);
 
         return persist;
@@ -59,5 +73,38 @@ public class PousadaService {
         pousadaPersist.setUsuarioPrincipal(usuarioPrincipal);
 
         return pousadaRepository.save(pousadaPersist);
+    }
+
+
+    public boolean validaDadosEstaoCompletoPerfilPousada(Pousada pousada){
+
+        return pousada.getCnpj() != null &&
+                pousada.getDescricao() != null &&
+                pousada.getBreve_descricao() != null &&
+                pousada.getNome_fantasia() != null &&
+                pousada.getNome_responsavel() != null &&
+                pousada.getRazao_social() != null &&
+                pousada.getFoto_perfil() != null;
+    }
+
+    public boolean validaQuartosExistentePousada(Pousada pousada){
+
+        long quantidade_quartos = quartoService.trazQuantiadeQuartosPousada(pousada);
+
+        if(quantidade_quartos == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean validaFotosGaleriaExistentePousada(Pousada pousada){
+        long quantidadeFotosGaleria = galeriaService.trazQuantiadeFotosGaleriaPousada(pousada);
+
+        if(quantidadeFotosGaleria == 0){
+            return false;
+        }else{
+            return true;
+        }
     }
 }

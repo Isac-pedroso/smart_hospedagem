@@ -5,7 +5,9 @@ import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaRequestDto;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Pousada {
@@ -28,6 +30,17 @@ public class Pousada {
     @Column(nullable = true, columnDefinition = "TEXT")
     private String descricao;
 
+    @Column(nullable = false)
+    private String foto_perfil;
+
+    @OneToMany(mappedBy = "pousada", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PousadaEtapasConfiguracao> etapas_configuracoes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pousada", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Quarto> quartos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pousada", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GaleriaPousada> galeriaPousada = new ArrayList<>();
 
     public Pousada(){
 
@@ -41,6 +54,39 @@ public class Pousada {
         this.setCnpj(requestDto.cnpj());
         this.setBreve_descricao(requestDto.breve_descricao());
         this.setDescricao(requestDto.descricao());
+    }
+
+
+    public List<Quarto> getQuartos() {
+        return quartos;
+    }
+
+    public void setQuartos(List<Quarto> quartos) {
+        this.quartos = quartos;
+    }
+
+    public List<GaleriaPousada> getGaleriaPousada() {
+        return galeriaPousada;
+    }
+
+    public void setGaleriaPousada(List<GaleriaPousada> galeriaPousada) {
+        this.galeriaPousada = galeriaPousada;
+    }
+
+    public List<PousadaEtapasConfiguracao> getEtapas_configuracoes() {
+        return etapas_configuracoes;
+    }
+
+    public void setEtapas_configuracoes(List<PousadaEtapasConfiguracao> etapas_configuracoes) {
+        this.etapas_configuracoes = etapas_configuracoes;
+    }
+
+    public String getFoto_perfil() {
+        return foto_perfil;
+    }
+
+    public void setFoto_perfil(String foto_perfil) {
+        this.foto_perfil = foto_perfil;
     }
 
     public String getCnpj() {
