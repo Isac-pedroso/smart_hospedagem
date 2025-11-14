@@ -21,11 +21,12 @@ const Dashboard: React.FC = () => {
 
 
     useEffect(() => {
-        validaCadastroConcluido()
+        // validaCadastroConcluido()
     }, []);
 
     const validaCadastroConcluido = () => {
         if (!user.cadastro_concluido) {
+            
             showModal(AlertModal, {
                 titulo: "Mensagem cadastro",
                 mensagem: "Conclua seu cadastro para sua pousada ficar visivel aos hospedes!",

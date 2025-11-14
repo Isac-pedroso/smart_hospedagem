@@ -1,4 +1,4 @@
-import type { PousadaRequest, PousadaResponse } from "./pousada"
+import type { PousadaCadastroResponse, PousadaRequest, PousadaResponse } from "./pousada"
 import type { UsuarioResponse } from "./usuario"
 
 export interface UserPrincipalResponse{
@@ -15,7 +15,7 @@ export interface UserPrincipalRequest{
 export interface UserPrincipalCadastroRequest{
     usuarioPrincipalRequestDto: Record<string, any> | null,
     usuarioRequestDto: UsuarioResponse | null,
-    pousadaRequestDto: PousadaResponse | null
+    pousadaRequestDto: PousadaCadastroResponse | null
 }
 
 

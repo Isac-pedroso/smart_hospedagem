@@ -13,3 +13,9 @@ export interface PousadaResponse{
     descricao: string,
     breve_descricao: string
 }
+export interface PousadaCadastroResponse{
+    cnpj: string,
+    nome_fantasia: string,
+    razao_social: string,
+    nome_responsavel: string
+}

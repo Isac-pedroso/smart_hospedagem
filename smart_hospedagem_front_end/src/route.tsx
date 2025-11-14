@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 import Dashboard from './paginas/pousadaPaginas/dashboard/index.tsx';
 import PerfilPousada from './paginas/pousadaPaginas/perfilPousada/index.tsx';
 
-
 function AppRoutes() {
     return (
         <>

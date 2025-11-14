@@ -3,7 +3,7 @@ import type { UserPrincipalCadastroRequest, UserPrincipalResponse } from "../typ
 import { store } from "../store/store";
 import ValidBR from "validbr";
 import { useSelector } from "react-redux";
-import type { UsuarioResponse } from "../types/usuario"; 
+import type { UsuarioResponse } from "../types/usuario";
 import type { PousadaResponse } from "../types/pousada";
 import type { AtualizarDadosRequestDto } from "../types/UserPrincipal";
 
@@ -243,7 +243,7 @@ export async function atualizarDadosUsuario(usuario: UsuarioResponse | null, pou
 
         const response = await axios.put("http://localhost:8080/usuarioPrincipal/atualizarDados", data, config);
 
-        if(!response.data.success){
+        if (!response.data.success) {
             throw new Error(response.data.message);
         }
 
@@ -260,4 +260,30 @@ export async function atualizarDadosUsuario(usuario: UsuarioResponse | null, pou
             return { success: false, message: error.message }
         }
     }
+}
+
+export async function validaEtapasCadastro(token: string) {
+    try {
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        const response = await axios.get("http://localhost:8080/usuarioPrincipal/validaEtapasConfiguracao", config);
+
+        if (!response.data.success) throw new Error(response?.data?.message);
+
+        return { success: true, message: response?.data?.message, data: response?.data?.data };
+
+
+    } catch (error: any) {
+        if (error.response) {
+            return { success: false, message: error.response?.data?.message || error.message };
+        } else {
+            return { success: false, message: error };
+        }
+    }
+
 }
