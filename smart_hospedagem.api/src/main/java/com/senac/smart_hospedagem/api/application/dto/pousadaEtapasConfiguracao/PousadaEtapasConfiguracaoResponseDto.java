@@ -6,7 +6,7 @@ import com.senac.smart_hospedagem.api.domain.entity.PousadaEtapasConfiguracao;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record PousadaEtapasConfiguracaoResponseDto(Long id, String etapa, boolean conluido, LocalDateTime atualizadaEm) {
+public record PousadaEtapasConfiguracaoResponseDto(Long id, String etapa, boolean concluido, LocalDateTime atualizadaEm) {
     public PousadaEtapasConfiguracaoResponseDto(PousadaEtapasConfiguracao configuracao){
         this(
                 configuracao.getId(),

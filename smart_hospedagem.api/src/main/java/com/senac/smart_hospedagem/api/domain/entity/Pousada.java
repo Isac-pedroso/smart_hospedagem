@@ -34,12 +34,15 @@ public class Pousada {
     private String foto_perfil;
 
     @OneToMany(mappedBy = "pousada", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<PousadaEtapasConfiguracao> etapas_configuracoes = new ArrayList<>();
 
     @OneToMany(mappedBy = "pousada", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Quarto> quartos = new ArrayList<>();
 
     @OneToMany(mappedBy = "pousada", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<GaleriaPousada> galeriaPousada = new ArrayList<>();
 
     public Pousada(){
