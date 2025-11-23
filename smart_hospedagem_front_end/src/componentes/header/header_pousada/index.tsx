@@ -5,7 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 import "./header_pousada.module.css";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, NavLink } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../../store/authSlice";
@@ -63,12 +63,12 @@ const HeaderPousada: React.FC<HeaderPousadaProsps> = () => {
 
                     <ul className="nav nav-pills flex-column mb-auto">
                         <li className="nav-item">
-                            <Link to="/" className="nav-link active text-white">
+                            <NavLink to="" end className={({isActive}) => {  console.log("Dashboard ativo? ", isActive); return `nav-link text-white ${isActive ? 'active' : ''}`}}>
                                 <i className="bi bi-speedometer2 me-2"></i>
                                 Dashboard
-                            </Link>
+                            </NavLink>
                         </li>
-                        <li><a href="#" className="nav-link text-white"><i className="bi bi-building-check me-2"></i> Quartos e Tarifas</a></li>
+                        <li><NavLink to="/quartos_tarifas" className={({isActive}) => `nav-link text-white ${isActive ? 'active' : ''}`}><i className="bi bi-building me-2"></i> Quartos e Tarifas</NavLink></li>
                         <li><a href="#" className="nav-link text-white"><i className="bi bi-calendar-check me-2"></i> Reservas</a></li>
                         <li><a href="#" className="nav-link text-white"><i className="bi bi-people-fill me-2"></i> Hóspedes</a></li>
                         <li><a href="#" className="nav-link text-white"><i className="bi bi-cash-stack me-2"></i> Financeiro</a></li>

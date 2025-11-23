@@ -9,6 +9,7 @@ import LayoutSelector from './componentes/Layout/LayoutSelector/index.tsx';
 import { useSelector } from 'react-redux';
 import Dashboard from './paginas/pousadaPaginas/dashboard/index.tsx';
 import PerfilPousada from './paginas/pousadaPaginas/perfilPousada/index.tsx';
+import QuartosTarifas from './paginas/pousadaPaginas/quartosTarifas/index.tsx';
 
 function AppRoutes() {
     return (
@@ -19,6 +20,7 @@ function AppRoutes() {
                     <Route path='/login' element={<RecirecionaPorAutenticacao><Login /></ RecirecionaPorAutenticacao >} />
                     <Route path='/cadastro' element={<RecirecionaPorAutenticacao><Cadastro /></ RecirecionaPorAutenticacao >} />
                     <Route path='/perfil_pousada' element={<PerfilPousada />} />
+                    <Route path='/quartos_tarifas' element={<QuartosTarifas />} />
                     {/* <Route path='/galeria' element={<ValidAutenticacao><Galeria /></ValidAutenticacao>} /> */}
                 </Route>
             </Routes>

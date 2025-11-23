@@ -30,8 +30,8 @@ export const useValidacaoEtapasCadastro = () => {
         const response = await validaEtapasCadastro(token);
         console.log(response);
 
-        (response.data as Etapa[]).map((etapa: Etapa) => {
-            console.log(etapa)
+        for(const etapa of response.data as Etapa[]){
+            console.log(etapa.concluido);
 
             if (!etapa.concluido) {
                 showModal(AlertModal, {
@@ -39,10 +39,10 @@ export const useValidacaoEtapasCadastro = () => {
                     mensagem: getMensagemEtapa(etapa.etapa),
                     onConfirm: () => handlerRedirecionaPagina(etapa.etapa)
                 })
-
-                return;
+    
+                return false;
             }
-        })
+        }
     }
 
     function handlerRedirecionaPagina(etapa: string) {
@@ -52,7 +52,7 @@ export const useValidacaoEtapasCadastro = () => {
                 hideModal();
                 return;
             case "quartos":
-                navigate("/quartos")
+                navigate("/quartos_tarifas")
                 hideModal();
                 return;
             case "galeria":
@@ -63,7 +63,7 @@ export const useValidacaoEtapasCadastro = () => {
     }
 
     function getMensagemEtapa(etapa: string) {
-
+        console.log(etapa)
         switch (etapa) {
             case "dados_perfil":
                 return "Finalize todas as etapas do cadastro da sua pousada para que ela apareça para os hóspedes. Comece preenchendo os dados do seu perfil."

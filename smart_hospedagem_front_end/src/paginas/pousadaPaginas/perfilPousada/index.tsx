@@ -59,7 +59,6 @@ const PerfilPousada: React.FC = () => {
             
             setUserData(response.data);
 
-            console.log(userData)
         } catch (error: any) {
 
             if(error.response?.status === 401){

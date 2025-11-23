@@ -16,7 +16,7 @@ export async function getDadosFullUsuario(token: string) {
         }
 
         const response = await axios.get("http://localhost:8080/usuarioPrincipal/getDadosFullUsuario", config);
-        console.log(response)
+        
         if (!response.data.success) {
             throw new Error(response.data.message);
         }
