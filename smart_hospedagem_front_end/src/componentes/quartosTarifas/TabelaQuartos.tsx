@@ -9,8 +9,8 @@ interface TabelaQuartos {
 export default function TabelaQuartos({ quartos, onEditar }: TabelaQuartos) {
     
     useEffect(() => {
-        console.log(quartos)
-    }, []);
+        console.log(quartos);
+    }, [quartos]);
 
     return (
         <>
@@ -32,14 +32,14 @@ export default function TabelaQuartos({ quartos, onEditar }: TabelaQuartos) {
                             </tr>
                         </thead>
                         <tbody>
-                            {quartos.map((quarto) => (
+                            {quartos.map((quarto, index) => (
                                 <tr key={quarto.id}>
-                                    <td>1</td>
+                                    <td>{index+1}</td>
                                     <td>{quarto.nome}</td>
                                     <td>{quarto.descricao}</td>
-                                    <td>R$ 150,00</td>
-                                    <td>10%</td>
-                                    <td><span className="badge bg-success">Disponível</span></td>
+                                    <td>{quarto.vl_por_pessoa}</td>
+                                    <td>{quarto.desconto}%</td>
+                                    <td><span className="badge bg-success">{quarto.status_id.nome}</span></td>
                                     <td>3 fotos</td>
                                     <td>
                                         <button className="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalQuarto" onClick={() => onEditar(quarto)}>

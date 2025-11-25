@@ -12,9 +12,10 @@ export async function Cadastrar(request: QuartoRequestDto, token: string){
                 Authorization: `Bearer ${token}`
             }
         }
-
+        
         const response = await axios.post("http://localhost:8080/quarto/cadastrar", request, config)
         
+        console.log(response)
         if(!response.data.success){
             throw new Error(response.data.message);
         }
@@ -28,3 +29,29 @@ export async function Cadastrar(request: QuartoRequestDto, token: string){
         }
     }
 };
+
+
+export async function trazQuartosPousadaLogada(token: string){
+    try{
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        const response = await axios.get("http://localhost:8080/quarto/trazQuartosPousadaLogada", config);
+        console.log(response);
+        if(!response.data.success){
+            throw new Error(response.data.message);
+        }
+
+        return {success: true, message: response.data.message, data: response.data.data.quartos};
+    }catch(error: any){
+        if (error.response) {
+            return { success: false, message: error.response?.data?.message || error }
+        } else {
+            return { success: false, message: error.message || error }
+        }
+    }
+}
