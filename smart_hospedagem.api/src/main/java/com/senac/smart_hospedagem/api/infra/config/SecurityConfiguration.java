@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET, "/pousada/listarPousadas").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/quarto/cadastrar").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/quarto/trazQuartosPousadaLogada").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/pousada/trazDetalhesPousada/**").permitAll()
                                 .requestMatchers("/swagger-resources/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()

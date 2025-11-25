@@ -1,5 +1,6 @@
 package com.senac.smart_hospedagem.api.application.services;
 
+import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaDetalhesResponseDto;
 import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaRequestDto;
 import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaResponseDto;
 import com.senac.smart_hospedagem.api.application.dto.pousada.PousadasResponseDto;
@@ -106,5 +107,11 @@ public class PousadaService {
         }else{
             return true;
         }
+    }
+
+    public PousadaDetalhesResponseDto trazDetalhesPousada(Long id){
+        Pousada pousada = pousadaRepository.findById(id).orElseThrow(() -> new RuntimeException("Pousada não encontrada"));
+
+        return new PousadaDetalhesResponseDto(pousada);
     }
 }
