@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PousadaDetalhes.css";
 import type { PousadaDetalhesRespoinse } from "../../types/pousada";
+import { useModal } from "../../componentes/modal/ModalContext";
+import { AlertModal } from "../../componentes/modal/modals/modalsPadrao/AlertModal";
+import { trazDetalhesPousada } from "../../services/pousadaService";
+import { useParams } from "react-router-dom";
 
 
 const PousadaDetalhes = () => {
+    const { showModal, hideModal } = useModal();
+    const { id } = useParams();
     const [pousada, setPousada] = useState<PousadaDetalhesRespoinse>({
         cnpj: '',
         nome_fantasia: '',
@@ -16,6 +22,35 @@ const PousadaDetalhes = () => {
         quartos: [],
         galeriaPousada: []
     });
+
+
+    useEffect(()=>{
+        handlerGetDetalhesPousada();
+    }, [])
+
+    const handlerGetDetalhesPousada = async () => {
+        try {
+
+            if(!id){
+                throw new Error("Pousada não selecionada");
+            }
+
+            const response = await trazDetalhesPousada(id);
+            
+            if (!response.success) {
+                throw new Error(response.message);
+            }
+
+            setPousada(response.data);
+
+        } catch (error: any) {
+            showModal(AlertModal, {
+                titulo: "Mensagem sistema",
+                mensagem: error?.message,
+                onConfirm: hideModal
+            })
+        }
+    }
 
     return (
         <div className="container my-5">

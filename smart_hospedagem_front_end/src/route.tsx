@@ -22,7 +22,7 @@ function AppRoutes() {
                     <Route path='/cadastro' element={<RecirecionaPorAutenticacao><Cadastro /></ RecirecionaPorAutenticacao >} />
                     <Route path='/perfil_pousada' element={<PerfilPousada />} />
                     <Route path='/quartos_tarifas' element={<QuartosTarifas />} />
-                    <Route path='/detalhesPousada' element={<PousadaDetalhes />} />
+                    <Route path='/detalhesPousada/:id' element={<PousadaDetalhes />} />
                     {/* <Route path='/galeria' element={<ValidAutenticacao><Galeria /></ValidAutenticacao>} /> */}
                 </Route>
             </Routes>
