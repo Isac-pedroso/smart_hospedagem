@@ -1,0 +1,30 @@
+import axios from "axios";
+import type { QuartoRequestDto, QuartoResponseDto } from "../types/quarto";
+
+
+
+
+export async function Cadastrar(request: QuartoRequestDto, token: string){
+    try{
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        const response = await axios.post("http://localhost:8080/quarto/cadastrar", request, config)
+        
+        if(!response.data.success){
+            throw new Error(response.data.message);
+        }
+
+        return { success: true, message: response.data.message, data: response.data.data};
+    }catch(error: any){
+        if (error.response) {
+            return { success: false, message: error.response?.data?.message || error }
+        } else {
+            return { success: false, message: error.message || error }
+        }
+    }
+};
