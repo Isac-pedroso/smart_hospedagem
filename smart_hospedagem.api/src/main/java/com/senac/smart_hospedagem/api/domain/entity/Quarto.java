@@ -1,5 +1,6 @@
 package com.senac.smart_hospedagem.api.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.senac.smart_hospedagem.api.application.dto.quarto.QuartoRequestDto;
 import jakarta.persistence.*;
 
@@ -30,6 +31,7 @@ public class Quarto {
 
     @ManyToOne
     @JoinColumn(name = "pousada_id")
+    @JsonIgnore
     private Pousada pousada;
 
     public Quarto(){}
