@@ -1,5 +1,6 @@
 package com.senac.smart_hospedagem.api.domain.entity;
 
+import com.senac.smart_hospedagem.api.application.dto.quarto.QuartoRequestDto;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,9 +15,33 @@ public class Quarto {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String descricao;
 
+    @Column(nullable = false)
+    private double vl_por_pessoa;
+
+    @Column(nullable = false)
+    private double desconto;
+
+    @Column(nullable = false)
+    private int capacidade;
+
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status_quarto status;
+
     @ManyToOne
     @JoinColumn(name = "pousada_id")
     private Pousada pousada;
+
+    public Quarto(){}
+
+    public Quarto(QuartoRequestDto requestDto){
+        this.id = requestDto.id();
+        this.nome = requestDto.nome();;
+        this.descricao = requestDto.descricao();
+        this.desconto = requestDto.desconto();
+        this.vl_por_pessoa = requestDto.vl_por_pessoa();
+        this.capacidade = requestDto.capacidade();
+    }
 
     public Long getId() {
         return id;
@@ -24,6 +49,38 @@ public class Quarto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public double getVl_por_pessoa() {
+        return vl_por_pessoa;
+    }
+
+    public void setVl_por_pessoa(double vl_por_pessoa) {
+        this.vl_por_pessoa = vl_por_pessoa;
+    }
+
+    public double getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(double desconto) {
+        this.desconto = desconto;
+    }
+
+    public int getCapacidade() {
+        return capacidade;
+    }
+
+    public void setCapacidade(int capacidade) {
+        this.capacidade = capacidade;
+    }
+
+    public Status_quarto getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status_quarto status) {
+        this.status = status;
     }
 
     public String getNome() {
