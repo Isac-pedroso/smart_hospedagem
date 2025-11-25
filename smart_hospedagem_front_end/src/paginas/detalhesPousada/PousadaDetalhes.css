@@ -1,0 +1,59 @@
+/* PousadaDetalhes.css */
+
+/* Estilos gerais */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+}
+
+h3 {
+  font-size: 1.8rem;
+  color: #34495e;
+  margin-top: 20px;
+}
+
+.carousel-inner img {
+  height: 300px;
+  object-fit: cover;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  color: #2c3e50;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #7f8c8d;
+}
+
+.btn-success {
+  background-color: #27ae60;
+  border: none;
+  font-size: 1.1rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+img {
+  border-radius: 8px;
+}
