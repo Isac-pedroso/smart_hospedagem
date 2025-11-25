@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.PUT, "/usuarioPrincipal/validaEtapasConfiguracao").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/pousada/listarPousadas").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/quarto/cadastrar").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/quarto/trazQuartosPousadaLogada").authenticated()
                                 .requestMatchers("/swagger-resources/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()

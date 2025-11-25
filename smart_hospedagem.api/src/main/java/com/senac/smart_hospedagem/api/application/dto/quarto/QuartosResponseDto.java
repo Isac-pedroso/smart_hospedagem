@@ -1,4 +1,8 @@
 package com.senac.smart_hospedagem.api.application.dto.quarto;
 
-public class QuartosResponseDto {
+import com.senac.smart_hospedagem.api.domain.entity.Quarto;
+
+import java.util.List;
+
+public record QuartosResponseDto(List<QuartoResponseDto> quartos) {
 }
