@@ -6,30 +6,71 @@
   margin: 0 auto;
 }
 
+/* Cabeçalho da Pousada */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
 h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
 h3 {
   font-size: 1.8rem;
   color: #34495e;
   margin-top: 20px;
+  font-weight: 500;
 }
 
+.text-muted {
+  font-size: 1.1rem;
+  color: #7f8c8d;
+}
+
+.foto-perfil {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 15px;
+  margin-top: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Galeria de Fotos */
 .carousel-inner img {
-  height: 300px;
+  height: 400px;
   object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
+
+/* Cartões de Quarto */
 .card {
   border: none;
+  border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
 }
 
 .card-img-top {
   height: 200px;
   object-fit: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 .card-body {
@@ -39,11 +80,18 @@ h3 {
 .card-title {
   font-size: 1.25rem;
   color: #2c3e50;
+  font-weight: 600;
 }
 
 .card-text {
   font-size: 1rem;
   color: #7f8c8d;
+}
+
+.card-footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #e1e1e1;
+  text-align: center;
 }
 
 .btn-success {
@@ -54,6 +102,18 @@ h3 {
   border-radius: 5px;
 }
 
-img {
+.btn-success:hover {
+  background-color: #2ecc71;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
   border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .card-img-top {
+    height: 150px;
+  }
 }

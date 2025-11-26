@@ -24,19 +24,19 @@ const PousadaDetalhes = () => {
     });
 
 
-    useEffect(()=>{
+    useEffect(() => {
         handlerGetDetalhesPousada();
     }, [])
 
     const handlerGetDetalhesPousada = async () => {
         try {
 
-            if(!id){
+            if (!id) {
                 throw new Error("Pousada não selecionada");
             }
 
             const response = await trazDetalhesPousada(id);
-            
+
             if (!response.success) {
                 throw new Error(response.message);
             }
@@ -61,7 +61,7 @@ const PousadaDetalhes = () => {
                 <img
                     src={pousada.foto_perfil || "https://via.placeholder.com/600x300"}
                     alt="Foto de Perfil da Pousada"
-                    className="img-fluid rounded"
+                    className="foto-perfil img-fluid"
                 />
             </header>
 
@@ -69,10 +69,12 @@ const PousadaDetalhes = () => {
             <div className="row mt-4">
                 <div className="col-md-6">
                     <h3>Informações da Pousada</h3>
-                    <p><strong>Razão Social:</strong> {pousada.razao_social || "Não disponível"}</p>
-                    <p><strong>Responsável:</strong> {pousada.nome_responsavel || "Não disponível"}</p>
-                    <p><strong>CNPJ:</strong> {pousada.cnpj || "Não disponível"}</p>
-                    <p><strong>Descrição:</strong> {pousada.descricao || "Sem descrição adicional."}</p>
+                    <ul className="list-unstyled">
+                        <li><strong>Razão Social:</strong> {pousada.razao_social || "Não disponível"}</li>
+                        <li><strong>Responsável:</strong> {pousada.nome_responsavel || "Não disponível"}</li>
+                        <li><strong>CNPJ:</strong> {pousada.cnpj || "Não disponível"}</li>
+                        <li><strong>Descrição:</strong> {pousada.descricao || "Sem descrição adicional."}</li>
+                    </ul>
                 </div>
 
                 {/* Galeria de Fotos */}
@@ -80,7 +82,6 @@ const PousadaDetalhes = () => {
                     <h3>Galeria de Fotos</h3>
                     <div id="pousadaGallery" className="carousel slide" data-bs-ride="carousel">
                         <div className="carousel-inner">
-
                             <div className="carousel-item active">
                                 <img
                                     src="https://via.placeholder.com/600x400"

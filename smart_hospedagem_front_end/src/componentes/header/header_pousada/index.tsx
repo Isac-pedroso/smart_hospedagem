@@ -75,7 +75,7 @@ const HeaderPousada: React.FC<HeaderPousadaProsps> = () => {
                         <li><a href="#" className="nav-link text-white"><i className="bi bi-chat-dots me-2"></i> Mensagens</a></li>
                         <li><a href="#" className="nav-link text-white"><i className="bi bi-bar-chart-line me-2"></i> Relatórios</a></li>
                         <li><a href="#" className="nav-link text-white"><i className="bi bi-star-fill me-2"></i> Avaliações</a></li>
-                        <li><a href="#" className="nav-link text-white"><i className="bi bi-image me-2"></i> Galeria</a></li>
+                        <li><NavLink to="/galeria_pousada" className={({isActive}) => `nav-link text-white ${isActive ? 'active' : ''}`}><i className="bi bi-image me-2"></i> Galeria</NavLink></li>
                         <li><a href="#" className="nav-link text-white"><i className="bi bi-megaphone me-2"></i> Promoções</a></li>
                         <li><a href="#" className="nav-link text-white"><i className="bi bi-gear me-2"></i> Configurações</a></li>
                     </ul>

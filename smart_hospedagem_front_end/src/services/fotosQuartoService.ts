@@ -67,3 +67,28 @@ export const trazFotosQuarto = async (id_quarto: number, token: string | null) =
         }
     }
 } 
+
+export const excluirFoto = async (id_foto: number, token: string | null) => {
+    try {
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        const response = await axios.delete(`http://localhost:8080/fotosQuarto/excluirFoto/${id_foto}`, config)
+        console.log(response)
+        if(!response.data.success){
+            throw new Error(response.data.message);
+        }
+
+        return {success: true, message: response.data.message};
+    } catch (error: any) {
+        if (error.response) {
+            return { success: false, message: error.response.data.message || error };
+        } else {
+            return { success: false, message: error.message || error };
+        }
+    }
+} 

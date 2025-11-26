@@ -11,6 +11,7 @@ import Dashboard from './paginas/pousadaPaginas/dashboard/index.tsx';
 import PerfilPousada from './paginas/pousadaPaginas/perfilPousada/index.tsx';
 import QuartosTarifas from './paginas/pousadaPaginas/quartosTarifas/index.tsx';
 import PousadaDetalhes from './paginas/detalhesPousada/index.tsx';
+import GaleriaPousada from './paginas/pousadaPaginas/galeriaPousada/index.tsx';
 
 function AppRoutes() {
     return (
@@ -23,6 +24,7 @@ function AppRoutes() {
                     <Route path='/perfil_pousada' element={<PerfilPousada />} />
                     <Route path='/quartos_tarifas' element={<QuartosTarifas />} />
                     <Route path='/detalhesPousada/:id' element={<PousadaDetalhes />} />
+                    <Route path='/galeria_pousada' element={<GaleriaPousada />} />
                     {/* <Route path='/galeria' element={<ValidAutenticacao><Galeria /></ValidAutenticacao>} /> */}
                 </Route>
             </Routes>

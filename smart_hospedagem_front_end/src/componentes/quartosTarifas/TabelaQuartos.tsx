@@ -46,7 +46,7 @@ export default function TabelaQuartos({ quartos, onEditar, onFotosQuarto}: Tabel
                                         <button className="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalQuarto" onClick={() => onEditar(quarto)}>
                                             Editar
                                         </button>
-                                        <button className="btn btn-sm btn-secondary ms-2" data-bs-toggle="modal" data-bs-target="#modalFotos" onClick={() => onFotosQuarto(quarto)}>
+                                        <button style={{marginTop: "5px"}} className="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modalFotos" onClick={() => onFotosQuarto(quarto)}>
                                             Fotos
                                         </button>
                                     </td>

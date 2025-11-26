@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { trazFotosQuarto, uploadFoto } from "../../services/fotosQuartoService";
+import { excluirFoto, trazFotosQuarto, uploadFoto } from "../../services/fotosQuartoService";
 import type { Quarto } from "../../types/quarto"
 import { useModal } from "../modal/ModalContext";
 import { AlertModal } from "../modal/modals/modalsPadrao/AlertModal";
@@ -18,7 +18,7 @@ export default function ModalFotos({ quarto, token = null }: ModalFotos) {
 
     useEffect(() => {
         console.log(quarto);
-        if(quarto?.id && token){
+        if (quarto?.id && token) {
             handleTrazFotosQuarto();
         }
     }, [quarto, token]);
@@ -70,6 +70,8 @@ export default function ModalFotos({ quarto, token = null }: ModalFotos) {
                 onConfirm: hideModal
             })
 
+            handleTrazFotosQuarto();
+
         } catch (error: any) {
             console.error(error);
             showModal(AlertModal, {
@@ -86,6 +88,37 @@ export default function ModalFotos({ quarto, token = null }: ModalFotos) {
             setFotoSelecionada(e.target.files[0]);
         } else {
             setFotoSelecionada(null);
+        }
+    };
+
+
+    const handleExcluirFoto = async (id_foto: number | null) => {
+        try {
+
+            if (!id_foto) {
+                throw new Error("Foto não selecionada!");
+            }
+
+            const response = await excluirFoto(id_foto, token)
+            console.log(response)
+            if (!response.success) {
+                throw new Error(response.message);
+            }
+
+            showModal(AlertModal, {
+                titulo: "Mensagem sistema",
+                mensagem: response.message,
+                onConfirm: hideModal
+            })
+
+            handleTrazFotosQuarto();
+
+        } catch (error: any) {
+            showModal(AlertModal, {
+                titulo: "Mensagem sistema",
+                mensagem: error?.message,
+                onConfirm: hideModal
+            })
         }
     };
 
@@ -112,7 +145,7 @@ export default function ModalFotos({ quarto, token = null }: ModalFotos) {
 
                             <h6>Fotos do Quarto</h6>
 
-                            <div className="row g-3">
+                            <div className="row g-3" style={{ marginBottom: "25px" }}>
 
                                 {fotosQuarto.length > 0 ? fotosQuarto.map((foto, index) => (
                                     <div className="col-md-3" key={foto.id}>
@@ -120,12 +153,13 @@ export default function ModalFotos({ quarto, token = null }: ModalFotos) {
                                             src={foto.caminhoFoto?.toString()}
                                             alt="foto"
                                             className="photo-thumb mb-2"
+                                            style={{ width: "100%", height: "80%", marginBottom: "0px !important" }}
                                         />
-                                        <button className="btn btn-sm btn-danger w-100">
+                                        <button className="btn btn-sm btn-danger w-100" style={{ marginTop: "10px" }} onClick={() => handleExcluirFoto(foto.id)}>
                                             Excluir
                                         </button>
                                     </div>
-                                )) : <p>Nenhuma foto cadastrada para este quarto.</p> }
+                                )) : <p>Nenhuma foto cadastrada para este quarto.</p>}
                             </div>
                         </div>
 

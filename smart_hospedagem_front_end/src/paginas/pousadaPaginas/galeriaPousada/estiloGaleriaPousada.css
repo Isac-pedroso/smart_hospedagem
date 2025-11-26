@@ -1,0 +1,73 @@
+/* Galeria.css */
+
+/* Container do formulário e tabela */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Cabeçalho */
+h2 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Formulário */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    font-size: 1rem;
+    color: #34495e;
+}
+
+.form-control {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.btn-primary {
+    background-color: #27ae60;
+    border: none;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background-color: #2ecc71;
+}
+
+/* Tabela de Galeria */
+.table {
+    margin-top: 30px;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+}
+
+.table td {
+    font-size: 1rem;
+}
+
+.table img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .table img {
+        width: 80px;
+        height: 80px;
+    }
+}
