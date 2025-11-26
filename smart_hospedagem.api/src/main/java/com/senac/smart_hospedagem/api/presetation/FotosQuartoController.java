@@ -42,4 +42,16 @@ public class FotosQuartoController {
             return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
         }
     }
+
+
+    @DeleteMapping("/excluirFoto/{id_foto}")
+    public ResponseEntity<?> excluirFoto(@PathVariable Long id_foto){
+        try{
+            fotosQuartoService.excluirFoto(id_foto);
+            return ResponseEntity.ok(Map.of("success", true, "message", "Foto excluida com sucesso"));
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
+        }
+    }
 }

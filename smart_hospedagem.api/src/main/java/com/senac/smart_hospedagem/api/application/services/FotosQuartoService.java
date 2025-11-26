@@ -44,10 +44,6 @@ public class FotosQuartoService {
 
         Files.createDirectories(filePath.getParent());
 
-        if (Files.exists(filePath)) {
-            throw new IOException("Arquivo com o mesmo nome já existe.");
-        }
-
         file.transferTo(filePath.toFile());
 
         FotosQuarto fotoQuarto = new FotosQuarto();
@@ -68,5 +64,10 @@ public class FotosQuartoService {
         List<FotosQuarto> fotos = fotosQuartoRespository.findByQuartoId(id_quarto);
 
         return new FotosQuartoResponseDto(fotos);
+    }
+
+    public void excluirFoto(Long id_foto){
+        fotosQuartoRespository.deleteById(id_foto);
+        return;
     }
 }
