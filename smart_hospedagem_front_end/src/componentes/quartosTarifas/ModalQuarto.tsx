@@ -42,6 +42,8 @@ export default function ModalQuarto({ quarto, token = null , onGetQuartos}: Moda
                 throw new Error(response.message);
             }
 
+            console.log(response)
+
             showModal(AlertModal, {
                 titulo: "Mensagem cadastro",
                 mensagem: response.message,
@@ -82,27 +84,27 @@ export default function ModalQuarto({ quarto, token = null , onGetQuartos}: Moda
                                 <div className="row">
                                     <div className="col-md-6 mb-3">
                                         <label className="form-label">Nome do Quarto</label>
-                                        <input type="text" className="form-control" placeholder="Ex: Suite Master" value={quarto?.nome} onChange={(e) => setNome(e.target.value)} />
+                                        <input type="text" className="form-control" placeholder="Ex: Suite Master" value={nome} onChange={(e) => setNome(e.target.value)} />
                                     </div>
 
                                     <div className="col-md-3 mb-3">
                                         <label className="form-label">Valor por Pessoa</label>
-                                        <input type="number" className="form-control" placeholder="R$" value={quarto?.vl_por_pessoa}  onChange={(e) => setVlPorPessoa(parseFloat(e.target.value))}/>
+                                        <input type="number" className="form-control" placeholder="R$" value={vlPorPessoa}  onChange={(e) => setVlPorPessoa(parseFloat(e.target.value))}/>
                                     </div>
 
                                     <div className="col-md-3 mb-3">
                                         <label className="form-label">Desconto (%)</label>
-                                        <input type="number" className="form-control" placeholder="0" value={quarto?.desconto}  onChange={(e) => setDesconto(parseFloat(e.target.value))}/>
+                                        <input type="number" className="form-control" placeholder="0" value={desconto}  onChange={(e) => setDesconto(parseFloat(e.target.value))}/>
                                     </div>
 
                                     <div className="col-md-12 mb-3">
                                         <label className="form-label">Descrição</label>
-                                        <textarea className="form-control" rows="3" value={quarto?.descricao}  onChange={(e) => setDescricao(e.target.value)}></textarea>
+                                        <textarea className="form-control" rows="3" value={descricao}  onChange={(e) => setDescricao(e.target.value)}></textarea>
                                     </div>
 
                                     <div className="col-md-6 mb-3">
                                         <label className="form-label">Status</label>
-                                        <select className="form-select" value={quarto?.status_id?.id}  onChange={(e) => setStatusQuarto(parseInt(e.target.value))}>
+                                        <select className="form-select" value={statusQuarto}  onChange={(e) => setStatusQuarto(parseInt(e.target.value))}>
                                             <option value={1}>Disponível</option>
                                             <option value={2}>Ocupado</option>
                                             <option value={3}>Manutenção</option>
@@ -111,7 +113,7 @@ export default function ModalQuarto({ quarto, token = null , onGetQuartos}: Moda
 
                                     <div className="col-md-6 mb-3">
                                         <label className="form-label">Capacidade</label>
-                                        <input type="number" className="form-control" placeholder="Nº de hóspedes" value={quarto?.capacidade}  onChange={(e) => setCapacidade(parseInt(e.target.value))} />
+                                        <input type="number" className="form-control" placeholder="Nº de hóspedes" value={capacidade}  onChange={(e) => setCapacidade(parseInt(e.target.value))} />
                                     </div>
                                 </div>
                             </div>
