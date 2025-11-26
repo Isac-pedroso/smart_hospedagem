@@ -4,9 +4,10 @@ import type { Quarto } from "../../types/quarto";
 interface TabelaQuartos {
     quartos: Quarto[];
     onEditar: (quarto: Quarto) => void;
+    onFotosQuarto: (quarto: Quarto) => void;
 }
 
-export default function TabelaQuartos({ quartos, onEditar }: TabelaQuartos) {
+export default function TabelaQuartos({ quartos, onEditar, onFotosQuarto}: TabelaQuartos) {
     
     useEffect(() => {
         console.log(quartos);
@@ -45,7 +46,7 @@ export default function TabelaQuartos({ quartos, onEditar }: TabelaQuartos) {
                                         <button className="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalQuarto" onClick={() => onEditar(quarto)}>
                                             Editar
                                         </button>
-                                        <button className="btn btn-sm btn-secondary ms-2" data-bs-toggle="modal" data-bs-target="#modalFotos">
+                                        <button className="btn btn-sm btn-secondary ms-2" data-bs-toggle="modal" data-bs-target="#modalFotos" onClick={() => onFotosQuarto(quarto)}>
                                             Fotos
                                         </button>
                                     </td>

@@ -64,9 +64,9 @@ export default function QuartosTarifas() {
             </button>
 
             <ResumoQuartos />
-            <TabelaQuartos quartos={quartos} onEditar={setQuarto} onGetQuartos={handlerGetQuartos} />
+            <TabelaQuartos quartos={quartos} onEditar={setQuarto} onFotosQuarto={setQuarto} onGetQuartos={handlerGetQuartos} />
             <ModalQuarto quarto={quarto} token={token} />
-            <ModalFotos />
+            <ModalFotos quarto={quarto} token={token} />
 
         </div>
     );
