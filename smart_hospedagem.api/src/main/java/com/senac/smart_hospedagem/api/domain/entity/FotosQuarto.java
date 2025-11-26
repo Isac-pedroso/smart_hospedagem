@@ -1,22 +1,21 @@
 package com.senac.smart_hospedagem.api.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
-public class GaleriaPousada {
+public class FotosQuarto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String descricao;
-
-    @Column(nullable = false, columnDefinition = "TEXT")
     private String caminhoFoto;
 
     @ManyToOne
-    @JoinColumn(name = "pousada_id")
-    private Pousada pousada;
+    @JoinColumn(name = "quarto_id")
+    @JsonIgnore
+    private Quarto quarto;
 
     public Long getId() {
         return id;
@@ -34,19 +33,11 @@ public class GaleriaPousada {
         this.caminhoFoto = caminhoFoto;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public Quarto getQuarto() {
+        return quarto;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Pousada getPousada() {
-        return pousada;
-    }
-
-    public void setPousada(Pousada pousada) {
-        this.pousada = pousada;
+    public void setQuarto(Quarto quarto) {
+        this.quarto = quarto;
     }
 }

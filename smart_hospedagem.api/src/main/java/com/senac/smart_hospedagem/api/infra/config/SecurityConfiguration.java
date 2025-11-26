@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -16,6 +17,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
     @Autowired
     private JwtFilter jwtFilter;
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        // IGNORAR totalmente o pipeline de segurança para /uploads/**
+        return (web) -> web.ignoring().requestMatchers("/uploads/**");
+    }
 
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception{
@@ -33,6 +40,9 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.POST, "/quarto/cadastrar").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/quarto/trazQuartosPousadaLogada").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/pousada/trazDetalhesPousada/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/fotosQuarto/upload/**").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/fotosQuarto/trazFotosQuarto/**").authenticated()
+                                .requestMatchers("/uploads/**").permitAll()
                                 .requestMatchers("/swagger-resources/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.senac.smart_hospedagem.api.application.dto.quarto.QuartoRequestDto;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Quarto {
     @Id
@@ -33,6 +35,10 @@ public class Quarto {
     @JoinColumn(name = "pousada_id")
     @JsonIgnore
     private Pousada pousada;
+
+    @OneToMany(mappedBy = "quarto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<FotosQuarto> fotosQuarto;
 
     public Quarto(){}
 
