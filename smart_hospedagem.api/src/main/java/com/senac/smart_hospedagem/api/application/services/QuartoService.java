@@ -43,14 +43,14 @@ public class QuartoService {
     public QuartoResponseDto cadastrar(UsuarioPrincipalDto usuarioLogado, QuartoRequestDto request) throws Exception{
         Quarto quarto = new Quarto(request);
 
-        Status_quarto status = statusQuartoRepository.getReferenceById(request.status_id());
+        Optional<Status_quarto> status = statusQuartoRepository.findById(request.status_id());
         Optional<UsuarioPrincipal> usuarioPersist = usuarioPrincipalRepository.findById(usuarioLogado.id());
 
         if(!usuarioPersist.isPresent()){
             throw new Exception("Usuario não encontrado!");
         }
 
-        quarto.setStatus(status);
+        quarto.setStatus(status.get());
         quarto.setPousada(usuarioPersist.get().getPousada());
 
         quarto.setId(null);
