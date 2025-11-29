@@ -19,12 +19,12 @@ export const AlertModal: React.FC<any> = ({titulo, mensagem, onConfirm, onClose}
             setMsgFinal(mensagem);
         }
 
-        const timer = setTimeout(()=>{
-            navigate("/login");
-            dispatch(logout())
-        }, 5000);
+        // const timer = setTimeout(()=>{
+        //     navigate("/login");
+        //     dispatch(logout())
+        // }, 2000);
 
-        return () => clearTimeout(timer);
+        // return () => clearTimeout(timer);
     }, [mensagem]);
 
     return (

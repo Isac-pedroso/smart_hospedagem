@@ -16,6 +16,7 @@ import type { Quarto } from "../../../types/quarto";
 export default function QuartosTarifas() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    
 
     const { user, token, isAuthenticated } = useSelector((state: any) => state.auth);
 
@@ -31,18 +32,14 @@ export default function QuartosTarifas() {
 
     const handlerGetQuartos = async () => {
         try {
-            console.log("AQUIULIAZANDO os dados");
-
             const response = await trazQuartosPousadaLogada(token);
-            console.log(response)
+
             if(!response.success){
                 throw new Error(response.message);
             }
-            console.log("AQUI")
-            console.log(response.data)
+
             setQuartos(response.data)
         } catch (error: any) {
-            console.log(error.message)
             showModal(AlertModal, {
                 titulo: "Mensagem sistema",
                 mensagem: error?.message,
@@ -64,7 +61,7 @@ export default function QuartosTarifas() {
             </button>
 
             <ResumoQuartos />
-            <TabelaQuartos quartos={quartos} onEditar={setQuarto} onFotosQuarto={setQuarto} onGetQuartos={handlerGetQuartos} />
+            <TabelaQuartos quartos={quartos} onEditar={setQuarto} onFotosQuarto={setQuarto} onGetQuartos={handlerGetQuartos} token={token}/>
             <ModalQuarto quarto={quarto} token={token} />
             <ModalFotos quarto={quarto} token={token} />
 

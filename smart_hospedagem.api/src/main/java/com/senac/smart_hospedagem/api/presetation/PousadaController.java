@@ -2,14 +2,14 @@ package com.senac.smart_hospedagem.api.presetation;
 
 import com.senac.smart_hospedagem.api.application.dto.pousada.PousadaDetalhesResponseDto;
 import com.senac.smart_hospedagem.api.application.dto.pousada.PousadasResponseDto;
+import com.senac.smart_hospedagem.api.application.dto.usuarioPrincipal.UsuarioPrincipalDto;
 import com.senac.smart_hospedagem.api.application.services.PousadaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -46,5 +46,20 @@ public class PousadaController {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
         }
+    }
+
+    @PostMapping("/uploadFotoPerfil")
+    public ResponseEntity<?> uploadFotoPerfil(@AuthenticationPrincipal UsuarioPrincipalDto usuarioLogado, @RequestParam("file") MultipartFile files){
+
+        try{
+
+            var pousadasResponse = pousadaService.uploadFotoPerfil(usuarioLogado, files);
+
+            return ResponseEntity.ok(Map.of("success", true, "message", "Foto de perfil atualizada com sucesso!", "data", pousadasResponse));
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", e.getMessage()));
+        }
+
     }
 }

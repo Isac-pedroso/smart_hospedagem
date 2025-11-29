@@ -10,6 +10,7 @@ export const uploadFoto = async (id_quarto: number, arquivo: File, token: string
                 Authorization: `Bearer ${token}`
             }
         }
+        
         const formData = new FormData();
         formData.append("file", arquivo);
 

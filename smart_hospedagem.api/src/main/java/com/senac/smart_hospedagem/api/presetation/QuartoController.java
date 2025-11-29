@@ -40,4 +40,16 @@ public class QuartoController {
             return ResponseEntity.badRequest().body(Map.of("success", false, "mensagem", e.getMessage()));
         }
     }
+
+    @DeleteMapping("/deletarQuarto/{id_quarto}")
+    public ResponseEntity<?> trazQuartosPousadaLogada(@PathVariable Long id_quarto){
+        try{
+            quartoService.deletarQuarto(id_quarto);
+            return ResponseEntity.ok(Map.of("success", true, "mensagem", "Quarto deletado com sucesso!"));
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(Map.of("success", false, "mensagem", e.getMessage()));
+        }
+    }
+
 }

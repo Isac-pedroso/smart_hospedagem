@@ -14,54 +14,61 @@ const PerfilPousada: React.FC = () => {
     // Estado para controlar a edição
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);
-    
-    const { showModal } = useModal();
-    const { hideModal } = useModal();
-    
+
+    const { showModal, hideModal } = useModal();
+
     const token = useSelector((state: any) => state.auth.token);
+    const [foto_perfil_editar, setFotoPerfilEditar] = useState<File | null>(null);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         hideModal()
-        console.log("USEEFFECT Executado")
         handlerGetDadosPousada();
     }, [token]);
 
+
+
     interface PousadaData {
         cnpj: string,
-        foto: string,
         nome_fantasia: string,
         nome_responsavel: string,
         breve_descricao: string,
         razao_social: string,
-        descricao: string
+        descricao: string,
+        foto_perfil: string,
+        caminho_foto_perfil: string
     }
 
     // Dados do perfil (para exemplo, você pode substituir com dados reais ou usar um hook como useState)
     const [userData, setUserData] = useState<PousadaData>({
-        foto: "",
         cnpj: "",
         nome_responsavel: "",
         breve_descricao: "",
         nome_fantasia: "",
         razao_social: "",
-        descricao: ""
+        descricao: "",
+        foto_perfil: "",
+        caminho_foto_perfil: ""
     });
 
-    const handlerGetDadosPousada = async () => { 
+    useEffect(() => {
+        console.log(userData);
+    }, [userData])
+
+    const handlerGetDadosPousada = async () => {
         try {
-            if(!token) throw new Error("Problema com login, por favor entre novamente no sistema !");
-            
+            if (!token) throw new Error("Problema com login, por favor entre novamente no sistema !");
+
             const response = await getDadosFullUsuario(token);
             console.log(response)
             if (!response.success) throw new Error(response.message);
-            
+
             setUserData(response.data);
 
         } catch (error: any) {
 
-            if(error.response?.status === 401){
+            if (error.response?.status === 401) {
                 showModal(AlertModal, {
                     titulo: "Sessão expirada",
                     mensagem: "Sua sessão expirou. Faça login novamente",
@@ -70,7 +77,7 @@ const PerfilPousada: React.FC = () => {
                         dispatch(logout());
                     }
                 })
-            }else{
+            } else {
                 showModal(AlertModal, {
                     titulo: "Mensagem sistema",
                     mensagem: error.message || "Problema ao carrega dados!",
@@ -84,12 +91,12 @@ const PerfilPousada: React.FC = () => {
 
     const handlerAtualizarDados = async () => {
         setLoading(true);
-        setTimeout(async ()=>{
-            try{
+        setTimeout(async () => {
+            try {
 
-                const response = await atualizarDadosUsuario(null, userData, token);
-                console.log(response)
-                if(!response?.success){
+                const response = await atualizarDadosUsuario(null, userData, token, foto_perfil_editar);
+
+                if (!response?.success) {
                     throw new Error(response?.message);
                 }
 
@@ -99,13 +106,17 @@ const PerfilPousada: React.FC = () => {
                     onConfirm: () => hideModal()
                 })
 
-            }catch(error: any){
+                setFotoPerfilEditar(null);
+
+                handlerGetDadosPousada();
+
+            } catch (error: any) {
                 showModal(AlertModal, {
                     titulo: "Mensagem sistema",
                     mensagem: error.message || "Problema ao salvar dados!",
                     onConfirm: () => hideModal()
                 })
-            }finally{
+            } finally {
                 setIsEditing(false);
                 setLoading(false);
             }
@@ -126,6 +137,14 @@ const PerfilPousada: React.FC = () => {
         });
     };
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setFotoPerfilEditar(e.target.files[0]);
+        } else {
+            setFotoPerfilEditar(null);
+        }
+    };
+
     if (loading) return <div className="carregamento-principal"><h1>Carregando dados...</h1></div>;
 
     return (
@@ -137,7 +156,7 @@ const PerfilPousada: React.FC = () => {
                         <div className="card profile-card">
                             <div className="card-body text-center">
                                 <img
-                                    src={userData.foto}
+                                    src={userData.caminho_foto_perfil}
                                     alt="Foto do perfil"
                                     className="img-fluid rounded-circle mb-3"
                                     style={{ width: "150px", height: "150px" }}
@@ -234,7 +253,7 @@ const PerfilPousada: React.FC = () => {
                                         )}
                                     </div>
                                 </div>
-                                <div className="row">
+                                <div className="row" style={{marginTop: "15px"}}>
                                     <div className="col-12">
                                         <h6>Descrição:</h6>
                                         {isEditing ? (
@@ -251,8 +270,19 @@ const PerfilPousada: React.FC = () => {
                                     </div>
                                 </div>
 
+
+
                                 {isEditing && (
-                                    <button className="btn btn-success mt-3" onClick={ handlerAtualizarDados}>
+                                    <div className="row" style={{marginTop: "15px"}}>
+                                        <div className="col-12">
+                                            <h6>Foto de perfil:</h6>
+                                            <input type="file" className="form-control mb-4" onChange={handleFileChange} />
+                                        </div>
+                                    </div>
+                                )}
+
+                                {isEditing && (
+                                    <button className="btn btn-success mt-3" onClick={handlerAtualizarDados}>
                                         Salvar
                                     </button>
                                 )}

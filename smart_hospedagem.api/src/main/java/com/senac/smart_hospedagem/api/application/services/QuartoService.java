@@ -74,4 +74,10 @@ public class QuartoService {
 
         return new QuartosResponseDto(quartoDtos);
     }
+
+    public void deletarQuarto(Long id_quarto){
+        quartoRepository.deleteById(id_quarto);
+        return;
+    }
+
 }

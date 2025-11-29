@@ -22,7 +22,18 @@ export async function getDadosFullUsuario(token: string) {
         }
 
         if (response.data.data.pousada) {
-            return { success: true, message: response.data.message, data: response.data.data.pousada };
+
+            const url = response.data.data.pousada.foto_perfil;
+            const urlPadronizada = url.replace(/\\/g, '/');
+            const ultimaBarra = urlPadronizada.lastIndexOf("/");
+            const nomeArquivo = urlPadronizada.substring(ultimaBarra+1)
+
+            const pousada = {
+                ...response.data.data.pousada,
+                caminho_foto_perfil: `http://localhost:8080/uploads/${nomeArquivo}`
+            }
+            // response.data.data.pousada.push({foto_perfil_novo: ""})
+            return { success: true, message: response.data.message, data: pousada };
         }
 
         if (response.data.data.usuario) {
@@ -227,7 +238,7 @@ async function validSenhas(usuarioPrincipal: Record<string, any> | null) {
     return { success: true, message: "Senhas iguais!" };
 }
 
-export async function atualizarDadosUsuario(usuario: UsuarioResponse | null, pousada: PousadaResponse | null, token: string) {
+export async function atualizarDadosUsuario(usuario: UsuarioResponse | null, pousada: PousadaResponse | null, token: string, foto_perfil_editar: File | null) {
     try {
 
         const config = {
@@ -242,6 +253,11 @@ export async function atualizarDadosUsuario(usuario: UsuarioResponse | null, pou
         }
 
         const response = await axios.put("http://localhost:8080/usuarioPrincipal/atualizarDados", data, config);
+
+        if(foto_perfil_editar){
+            const responseFotoPerfil = atualiarFotoPerfil(foto_perfil_editar, config);
+            if(!responseFotoPerfil) throw new Error("Ocorreu um erro ao atualizar a foto de perfil!");
+        }
 
         if (!response.data.success) {
             throw new Error(response.data.message);
@@ -286,4 +302,22 @@ export async function validaEtapasCadastro(token: string) {
         }
     }
 
+}
+
+
+async function atualiarFotoPerfil(foto: File, config: {}){
+    try{
+        const formData = new FormData();
+        formData.append("file", foto);
+
+        const response = await axios.post("http://localhost:8080/pousada/uploadFotoPerfil", formData, config)
+        console.log(response);
+        if(!response.data.success){
+            throw new Error(response.data.message);
+        }
+
+        return true;
+    }catch(error: any){
+        return false;
+    }
 }

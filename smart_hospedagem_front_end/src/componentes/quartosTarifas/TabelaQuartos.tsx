@@ -1,17 +1,44 @@
 import { useEffect, useState } from "react";
 import type { Quarto } from "../../types/quarto";
+import { useModal } from "../modal/ModalContext";
+import { AlertModal } from "../modal/modals/modalsPadrao/AlertModal";
+import { deletarQuarto } from "../../services/quartoService";
 
 interface TabelaQuartos {
     quartos: Quarto[];
     onEditar: (quarto: Quarto) => void;
     onFotosQuarto: (quarto: Quarto) => void;
+    onGetQuartos: () => void;
+    token: string
 }
 
-export default function TabelaQuartos({ quartos, onEditar, onFotosQuarto}: TabelaQuartos) {
-    
-    useEffect(() => {
-        console.log(quartos);
-    }, [quartos]);
+export default function TabelaQuartos({ quartos, onEditar, onFotosQuarto, onGetQuartos, token}: TabelaQuartos) {
+    const {showModal, hideModal} = useModal();
+
+    const handleExcluirQuarto = async (id_quarto: number) => {
+        try {
+            const response = await deletarQuarto(id_quarto, token);
+            console.log(response)
+            if (!response.success) {
+                throw new Error(response.message);
+            }
+
+            // onGetQuartos();
+
+            showModal(AlertModal, {
+                titulo: "Mensagem sistema",
+                mensagem: response.message,
+                onConfirm: hideModal
+            })
+        } catch (error: any) {
+            console.log(error.message)
+            showModal(AlertModal, {
+                titulo: "Mensagem sistema",
+                mensagem: error?.message,
+                onConfirm: hideModal
+            })
+        }
+    }
 
     return (
         <>
@@ -35,7 +62,7 @@ export default function TabelaQuartos({ quartos, onEditar, onFotosQuarto}: Tabel
                         <tbody>
                             {quartos.map((quarto, index) => (
                                 <tr key={quarto.id}>
-                                    <td>{index+1}</td>
+                                    <td>{index + 1}</td>
                                     <td>{quarto.nome}</td>
                                     <td>{quarto.descricao}</td>
                                     <td>{quarto.vl_por_pessoa}</td>
@@ -46,8 +73,11 @@ export default function TabelaQuartos({ quartos, onEditar, onFotosQuarto}: Tabel
                                         <button className="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalQuarto" onClick={() => onEditar(quarto)}>
                                             Editar
                                         </button>
-                                        <button style={{marginTop: "5px"}} className="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modalFotos" onClick={() => onFotosQuarto(quarto)}>
+                                        <button style={{ marginTop: "5px" }} className="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modalFotos" onClick={() => onFotosQuarto(quarto)}>
                                             Fotos
+                                        </button>
+                                        <button style={{ marginTop: "5px" }} className="btn btn-sm btn-danger" onClick={() => handleExcluirQuarto(quarto.id)}>
+                                            Excluir
                                         </button>
                                     </td>
                                 </tr>
